@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #F7F6F2;
+    --foreground: #16181D;
+    --muted: #EDEAE1;
+    --muted-foreground: #5C5F66;
+    --card: #FFFFFF;
+    --card-foreground: #16181D;
+    --popover: #FFFFFF;
+    --popover-foreground: #16181D;
+    --border: #D9D6CE;
+    --input: #D9D6CE;
+    --primary: #FF4F00;
+    --primary-foreground: #FFFFFF;
+    --secondary: #EBE8DF;
+    --secondary-foreground: #16181D;
+    --accent: #FF4F00;
+    --accent-foreground: #FFFFFF;
+    --accent-text: #B23400;
+    --destructive: #E53E3E;
+    --destructive-foreground: #FFFFFF;
+    --ring: #FF4F00;
+    --radius: 0.25rem;
+
+    --bar-1: #E9E6DE;
+    --bar-2: #FF4F00;
+    --bar-3-border: #16181D;
+    --bar-4-hatch: #D9D6CE;
+
+    --rule: #D9D6CE;
+  }
+
+  .dark, [data-theme="dark"] {
+    --background: #0E1015;
+    --foreground: #ECEAE4;
+    --muted: #1A1C23;
+    --muted-foreground: #9A9CA3;
+    --card: #151820;
+    --card-foreground: #ECEAE4;
+    --popover: #151820;
+    --popover-foreground: #ECEAE4;
+    --border: #2A2D35;
+    --input: #2A2D35;
+    --primary: #FF4F00;
+    --primary-foreground: #FFFFFF;
+    --secondary: #1F222B;
+    --secondary-foreground: #ECEAE4;
+    --accent: #FF4F00;
+    --accent-foreground: #FFFFFF;
+    --accent-text: #FF4F00;
+    --destructive: #FC8181;
+    --destructive-foreground: #0E1015;
+    --ring: #FF4F00;
+
+    --bar-1: #2B2F3A;
+    --bar-2: #FF4F00;
+    --bar-3-border: #ECEAE4;
+    --bar-4-hatch: #3A3E4A;
+
+    --rule: #2A2D35;
+  }
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-text: var(--accent-text);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-ring: var(--ring);
+  --color-rule: var(--rule);
+
+  --font-serif: var(--font-serif), "OT Jubilee", Georgia, serif;
+  --font-sans: var(--font-sans), "PP Nikkei Journal", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: #FF4F00;
+  color: #FFFFFF;
+}
+
+h1, h2, h3, h4, .font-serif-heading {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+/* Diagonal hatch pattern for Bar 4 */
+.hatch-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    currentColor 0,
+    currentColor 1.5px,
+    transparent 1.5px,
+    transparent 7px
+  );
+}
+
+/* Subtle grid line background for econometrics lab */
+.bg-grid-pattern {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+}

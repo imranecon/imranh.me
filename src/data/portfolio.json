@@ -1,0 +1,122 @@
+{
+  "hero": {
+    "name": "Imran Hossain",
+    "affiliation": "Research Associate, BIGD, BRAC University",
+    "bio": "I am a Research Associate in the Gender and Social Development Cluster at the BRAC Institute of Governance and Development (BIGD), BRAC University. My work focuses on poverty, inequality and education in Bangladesh, and my interests lie in applied microeconomics, development economics and political economy.\n\nI hold a BSc in Economics from Jahangirnagar University and am completing graduate-level coursework in Mathematics at Ahsanullah University of Science and Technology. Before research, I was a feature journalist at The Business Standard, one of the leading dailies of Bangladesh.",
+    "cvUrl": "/imranh_cv.pdf",
+    "socialLinks": {
+      "linkedin": "https://www.linkedin.com/in/imranh47/",
+      "github": "https://github.com/imranecon",
+      "twitter": "https://x.com/ImranH_47/",
+      "email": "imranh.econ@gmail.com"
+    }
+  },
+  "education": [
+    {
+      "id": "edu-1",
+      "degree": "MS in Mathematics",
+      "institution": "Ahsanullah University of Science and Technology",
+      "period": "2025–present"
+    },
+    {
+      "id": "edu-2",
+      "degree": "BSc in Economics",
+      "institution": "Jahangirnagar University",
+      "period": "2024"
+    }
+  ],
+  "research": [
+    {
+      "id": "crop-diversification",
+      "year": "2026",
+      "title": "Does Crop Diversification Improve Rural Household Income in Bangladesh?",
+      "authors": "Imran Hossain",
+      "status": "Working paper",
+      "url": "https://www.academia.edu/165399931/Does_Crop_Diversification_Improve_Rural_Household_Income_in_Bangladesh",
+      "abstract": "This paper examines whether crop diversification improves household income among rural farming households in Bangladesh, using data from the Household Income and Expenditure Survey (HIES) 2022. Using ordinary least squares (OLS) regression with division fixed effects and robust standard errors, the study finds that diversification has a strong and stable positive effect on crop sales income, but not on total household income once household characteristics are controlled. This suggests that diversification operates primarily through the agricultural income channel. The findings carry practical implications for agricultural extension policy in Bangladesh."
+    },
+    {
+      "id": "institutional-quality",
+      "year": "2024",
+      "title": "Does Institutional Quality Matter for Financial Development? Evidence from Six Asian Emerging Economies",
+      "authors": "Samia Islam, Mohammad Obaidullah, Imran Hossain, Ann Naser Nabil",
+      "status": "Presented at the 7th SANEM Annual Economists' Conference",
+      "url": "https://www.academia.edu/165400200/Does_Institutional_Quality_Matter_for_Financial_Development_Evidence_from_Six_Asian_Emerging_Economies_",
+      "abstract": "This study attempted to evaluate the role of institutional quality on the development of financial sector in the emerging Asian economies. The dependent variable of this study was financial development, measured by Domestic Credit to Private Sector (as percentage of GDP). In order to represent institutional quality, six governance effectiveness dimensions of Worldwide Governance Indicators (WGI), namely-Government Effectiveness, Control of Corruption, Political Stability and Absence of Violence/ Terrorism, Regulatory Quality, Rule of Law, and Voice and Accountability were used. Additionally, the study included economic growth (measured by GDP per capita at constant $2015) and trade openness (percentage of trade in GDP) as control variables. Data, ranged from 2002 to 2016, were collected from the data sources of World Bank, for six emerging Asian economies: Bangladesh, India, Pakistan, Iran, Malaysia, and Philippines. Cross-sectional dependence, serial correlation and heteroskedasticity in the model were confirmed by the Breusch-Pagan LM test of independence, the Wooldridge test and the Modified Wald test for groupwise heteroskedasticity. To counter aforementioned complications and generate unbiased estimators, the study used the FGLS for heteroskedastic panels with cross-sectional dependence and common AR(1) for all panels. The study found political stability and absence of violence/ terrorism to be a positive contributor to financial development, alongside rule of law, with both being statistically significant. The study has also reported insignificant impact of corruption control, government effectiveness, and voice and accountability, while the impact of regulatory quality is found significantly negative. Furthermore, the study reveals that, higher economic growth and trade openness enhance financial sector development significantly."
+    }
+  ],
+  "policy": [
+    {
+      "id": "policy-1",
+      "title": "Family Card Programme: PMT evaluation",
+      "tags": [
+        "Targeting",
+        "Survey design",
+        "Fieldwork"
+      ],
+      "description": "Evaluating the proxy means test scoring system: designed the questionnaire, trained enumerators, coordinated fieldwork and drafted the report."
+    },
+    {
+      "id": "policy-2",
+      "title": "UPGP intergenerational panel",
+      "tags": [
+        "Panel data",
+        "Poverty"
+      ],
+      "description": "Data management for a panel following BRAC Ultra-Poor Graduation Programme households across generations."
+    },
+    {
+      "id": "policy-3",
+      "title": "No Means No adaptation for an RCT",
+      "tags": [
+        "Gender",
+        "RCT"
+      ],
+      "description": "Helped adapt a self-defence curriculum for adolescent girls for a randomised evaluation."
+    }
+  ],
+  "teaching": [
+    {
+      "id": "teaching-1",
+      "badge": "2026",
+      "title": "A Backbencher's Guide to Econometrics",
+      "description": "A plain-language introductory econometrics booklet, printed on a not-for-profit basis and used by over 100 students and 20 university teachers in Bangladesh."
+    },
+    {
+      "id": "teaching-2",
+      "badge": "In progress",
+      "title": "Bangla translation of Good Economics for Hard Times",
+      "description": "By Abhijit V. Banerjee and Esther Duflo."
+    }
+  ],
+  "writing": {
+    "intro": "Between 2024 and 2026, I wrote over a hundred research-driven features for The Business Standard. Here are a selected few.",
+    "articles": [
+      {
+        "id": "writing-1",
+        "title": "The PhD landscape in Bangladesh: A reality check",
+        "url": "https://www.tbsnews.net/features/panorama/phd-landscape-bangladesh-reality-check-1090906"
+      },
+      {
+        "id": "writing-2",
+        "title": "How crypto thrives in Bangladesh's legal grey zone",
+        "url": "https://www.tbsnews.net/features/panorama/how-crypto-thrives-bangladeshs-legal-grey-zone-1137576"
+      },
+      {
+        "id": "writing-3",
+        "title": "What about our own adolescents?",
+        "url": "https://www.tbsnews.net/features/panorama/what-about-our-own-adolescents-1124121"
+      },
+      {
+        "id": "writing-4",
+        "title": "Online moral police forces cracking down on interfaith relationships",
+        "url": "https://www.tbsnews.net/features/panorama/online-moral-police-forces-cracking-down-interfaith-relationships-1056001"
+      },
+      {
+        "id": "writing-5",
+        "title": "Dhaka's buried past: Archaeological excavation unveils new history",
+        "url": "https://www.tbsnews.net/features/panorama/dhakas-buried-past-archaeological-excavation-unveils-new-history-988176"
+      }
+    ]
+  }
+}

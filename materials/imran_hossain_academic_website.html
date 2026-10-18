@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- EDIT HERE: Page Title & Meta Description -->
+  <title>Imran Hossain | Development Economics</title>
+  <meta name="description" content="Imran Hossain — Research Associate at BRAC Institute of Governance and Development (BIGD), BRAC University. Studying development economics, applied microeconomics, political economy, and poverty in Bangladesh.">
+  
+  <!-- EDIT HERE: Favicon and Open Graph Image filenames / URLs -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta property="og:title" content="Imran Hossain | Development Economics">
+  <meta property="og:description" content="Research Associate at BIGD, BRAC University. Studying development economics, applied microeconomics, political economy, poverty, inequality and education in Bangladesh.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Imran Hossain | Development Economics">
+  <meta name="twitter:description" content="Research Associate at BIGD, BRAC University. Studying development economics, applied microeconomics, and political economy.">
+  <meta name="twitter:image" content="og-image.jpg">
+
+  <!-- Prevent Flash of Unstyled Theme (FOUC) on load -->
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = savedTheme ? savedTheme : (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <style>
+    /* ==========================================================================
+       EDIT HERE: LOCAL @FONT-FACE RULES
+       Place your .woff2 font files in the same folder as index.html.
+       Only weight 500 for OT Jubilee and weight 300 for PP Nikkei Journal exist.
+       ========================================================================== */
+    @font-face {
+      font-family: "OT Jubilee";
+      src: url("OTJubilee-DiamondMedium.woff2") format("woff2");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "OT Jubilee";
+      src: url("OTJubilee-DiamondMediumItalic.woff2") format("woff2");
+      font-weight: 500;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "PP Nikkei Journal";
+      src: url("PPNikkeiJournal-Light.woff2") format("woff2");
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "PP Nikkei Journal";
+      src: url("PPNikkeiJournal-LightItalic.woff2") format("woff2");
+      font-weight: 300;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    /* ==========================================================================
+       EDIT HERE: COLOUR PALETTE, TYPOGRAPHY & PORTRAIT BAR VARIABLES
+       ========================================================================== */
+    :root,
+    [data-theme="light"] {
+      /* Core Light Mode Palette */
+      --bg: #F7F6F2;
+      --text: #16181D;
+      --text-secondary: #5C5F66;
+      --rule: #D9D6CE;
+      --accent: #FF4F00;      /* Graphics, brutalist borders and shadows */
+      --accent-text: #B23400; /* Links and small accent text for high contrast */
+      
+      /* Portrait Bar 1 soft neutral backdrop (keeps B&W portrait visible) */
+      --bar-1-fill: #E9E6DE;
+
+      /* Typography Stacks */
+      --font-serif: "OT Jubilee", Georgia, serif;
+      --font-sans: "PP Nikkei Journal", system-ui, -apple-system, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+      /* Layout Metrics */
+      --container-max: 1040px;
+      --measure: 65ch;
+
+      /* EDIT HERE: Portrait Bars Geometry (Percentages relative to composition stage)
+         The 4 bars share a bottom baseline (bottom: 0) and overlap slightly horizontally. */
+      --bar-1-left: 17%;
+      --bar-1-width: 45%;
+      --bar-1-height: 88%; /* Tallest: directly behind head and shoulders */
+
+      --bar-2-left: 5%;
+      --bar-2-width: 22%;
+      --bar-2-height: 62%; /* Solid accent orange #FF4F00 */
+
+      --bar-3-left: 55%;
+      --bar-3-width: 26%;
+      --bar-3-height: 73%; /* No fill, 1px border in text colour */
+
+      --bar-4-left: 72%;
+      --bar-4-width: 23%;
+      --bar-4-height: 36%; /* Shortest: diagonal hatch pattern */
+    }
+
+    [data-theme="dark"] {
+      /* EDIT HERE: Core Dark Mode Palette */
+      --bg: #0E1015;
+      --text: #ECEAE4;
+      --text-secondary: #9A9CA3;
+      --rule: #2A2D35;
+      --accent: #FF4F00;      /* Everything accent in dark mode */
+      --accent-text: #FF4F00;
+      
+      /* Light enough in dark mode so a black-and-white cutout portrait stays clearly visible */
+      --bar-1-fill: #3A3E48;
+    }
+
+    /* ==========================================================================
+       RESET & BASE EDITORIAL STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      font-size: 1.0625rem; /* 17px on mobile */
+      line-height: 1.65;
+      text-align: left;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        font-size: 1.125rem; /* 18px on desktop */
+      }
+    }
+
+    /* Enforce strict weight rules: never set sans to bold or semibold */
+    b, strong {
+      font-family: var(--font-serif);
+      font-weight: 500;
+    }
+
+    em, i {
+      font-style: italic;
+    }
+
+    /* Modular Type Scale for Headings & Display (always OT Jubilee weight 500) */
+    h1, h2, h3, .serif-title {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      font-size: clamp(2.25rem, 4.5vw, 3.35rem);
+      line-height: 1.08;
+      margin-bottom: 0.65rem;
+    }
+
+    h2 {
+      font-size: clamp(1.55rem, 2.8vw, 2.05rem);
+      margin-bottom: 1.5rem;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2vw, 1.45rem);
+      line-height: 1.3;
+    }
+
+    p {
+      max-width: var(--measure);
+    }
+
+    /* Links & Focus States */
+    a {
+      color: var(--accent-text);
+      text-decoration: underline;
+      text-underline-offset: 0.22em;
+      text-decoration-thickness: 1px;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    }
+
+    a:hover {
+      color: var(--text);
+      text-decoration-color: var(--accent);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* Tabular numerals / monospace exclusively for dates and tags */
+    .date, .tag {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.82rem;
+      letter-spacing: 0.01em;
+    }
+
+    /* Container & Section Architecture */
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 2.5rem;
+      }
+    }
+
+    section {
+      padding: 3.25rem 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    @media (min-width: 768px) {
+      section {
+        padding: 4.5rem 0;
+      }
+    }
+
+    /* Two-column editorial split on larger viewports */
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 860px) {
+      .section-grid {
+        grid-template-columns: 230px 1fr;
+        gap: 3rem;
+        align-items: start;
+      }
+      .section-grid > h2 {
+        margin-bottom: 0;
+        position: sticky;
+        top: 2rem;
+      }
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== */
+    .site-header {
+      border-bottom: 1px solid var(--rule);
+      background-color: var(--bg);
+      position: relative;
+      z-index: 20;
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 4.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+      min-height: 44px;
+      padding: 0.25rem 0;
+    }
+
+    .brand:hover {
+      color: var(--accent-text);
+    }
+
+    .brand-logo {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-name {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-links {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      list-style: none;
+      border-top: 1px solid var(--rule);
+      padding: 0.5rem 0 1rem;
+      order: 3;
+    }
+
+    .nav-links.is-open {
+      display: flex;
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      min-height: 44px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 0.25rem 0;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-text);
+    }
+
+    /* Theme Toggle & Mobile Menu Buttons (minimum 44x44px tap targets) */
+    .icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 0.75rem;
+      background: transparent;
+      border: 1px solid var(--rule);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .icon-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent-text);
+    }
+
+    .icon-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    /* Sun/Moon icon visibility based on active theme */
+    [data-theme="light"] .icon-sun { display: none; }
+    [data-theme="dark"] .icon-moon { display: none; }
+
+    @media (min-width: 860px) {
+      .menu-toggle {
+        display: none;
+      }
+      .nav-bar {
+        flex-wrap: nowrap;
+      }
+      .nav-links {
+        display: flex !important;
+        width: auto;
+        flex-direction: row;
+        align-items: center;
+        border-top: none;
+        padding: 0;
+        gap: 1.65rem;
+        order: 0;
+      }
+      .nav-links a {
+        font-size: 0.95rem;
+      }
+    }
+
+    /* ==========================================================================
+       HERO SECTION & SYMBOLIC DATA VISUALIZATIONS
+       ========================================================================== */
+    .hero {
+      border-top: none;
+      padding-top: 2.25rem;
+      padding-bottom: 3.5rem;
+      position: relative;
+    }
+
+    @media (min-width: 860px) {
+      .hero {
+        padding-top: 4.25rem;
+        padding-bottom: 5rem;
+      }
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+      align-items: center;
+    }
+
+    /* Mobile: portrait composition comes first at a smaller size, then text.
+       Desktop: two-column layout with text on left and portrait on right. */
+    .hero-visual-col {
+      order: 1;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .hero-text-col {
+      order: 2;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (min-width: 860px) {
+      .hero-grid {
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 3.5rem;
+      }
+      .hero-text-col {
+        order: 1;
+      }
+      .hero-visual-col {
+        order: 2;
+        max-width: 370px;
+        justify-self: end;
+      }
+    }
+
+    /* Affiliation & Bio */
+    .affiliation {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.5;
+      margin-bottom: 1.4rem;
+      max-width: var(--measure);
+    }
+
+    .bio {
+      margin-bottom: 2rem;
+      color: var(--text);
+      max-width: var(--measure);
+    }
+
+    /* Hero Actions */
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    /* Brutalist Touch 1: CV Button
+       Sharp 1px border and unblurred hard offset shadow (4px 4px 0) that shifts to 2px 2px on hover */
+    .btn-brutalist {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0.6rem 1.35rem;
+      background-color: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--accent);
+      box-shadow: 4px 4px 0 var(--accent);
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-brutalist:hover {
+      color: var(--text);
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--accent);
+    }
+
+    .email-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0.25rem 0;
+      font-size: 1.02rem;
+    }
+
+    /* Motif B: Seeded Random Walk Trend Lines behind/beside intro text */
+    .hero-trend-wrap {
+      position: absolute;
+      inset: -0.5rem 0 -1rem 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: visible;
+    }
+
+    .hero-trend-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    /* Motif A: Portrait Bars & Cutout Composition */
+    .portrait-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 4.8;
+      border-bottom: 1px solid var(--rule); /* Shared baseline */
+      overflow: hidden;
+    }
+
+    .bars-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .p-bar {
+      position: absolute;
+      bottom: 0;
+      border-radius: 0; /* Sharp corners */
+      transform-origin: bottom center;
+      transform: scaleY(1);
+    }
+
+    /* Animation state before page load trigger */
+    .js-anim-ready .p-bar {
+      transform: scaleY(0);
+      transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .js-anim-ready.bars-grown .p-bar {
+      transform: scaleY(1);
+    }
+
+    /* Staggered timing (~0.8s total duration across the 4 bars) */
+    .js-anim-ready .p-bar-1 { transition-delay: 0.00s; }
+    .js-anim-ready .p-bar-2 { transition-delay: 0.09s; }
+    .js-anim-ready .p-bar-3 { transition-delay: 0.18s; }
+    .js-anim-ready .p-bar-4 { transition-delay: 0.27s; }
+
+    /* Rectangle 1 (tallest, directly behind head and shoulders): soft neutral tone */
+    .p-bar-1 {
+      left: var(--bar-1-left);
+      width: var(--bar-1-width);
+      height: var(--bar-1-height);
+      background-color: var(--bar-1-fill);
+      z-index: 1;
+    }
+
+    /* Rectangle 2: solid accent orange #FF4F00 */
+    .p-bar-2 {
+      left: var(--bar-2-left);
+      width: var(--bar-2-width);
+      height: var(--bar-2-height);
+      background-color: var(--accent);
+      z-index: 2;
+    }
+
+    /* Rectangle 3: no fill, 1px border in the text colour */
+    .p-bar-3 {
+      left: var(--bar-3-left);
+      width: var(--bar-3-width);
+      height: var(--bar-3-height);
+      background-color: transparent;
+      border: 1px solid var(--text);
+      border-bottom: none;
+      z-index: 3;
+    }
+
+    /* Rectangle 4 (shortest): thin diagonal hatch pattern in secondary text colour */
+    .p-bar-4 {
+      left: var(--bar-4-left);
+      width: var(--bar-4-width);
+      height: var(--bar-4-height);
+      background-image: repeating-linear-gradient(
+        -45deg,
+        var(--text-secondary) 0px,
+        var(--text-secondary) 1px,
+        transparent 1px,
+        transparent 6px
+      );
+      border-top: 1px solid var(--text-secondary);
+      z-index: 4;
+    }
+
+    /* Portrait sits on top of the rectangles, bottom-aligned with baseline,
+       and slightly overlaps the top edge of the shortest bar (Bar 4). */
+    .portrait-img,
+    .portrait-fallback-svg {
+      position: absolute;
+      bottom: 0;
+      left: 16%;
+      width: 68%;
+      height: 85%;
+      object-fit: contain;
+      object-position: bottom center;
+      z-index: 5;
+      border: none;
+      border-radius: 0;
+      filter: none;
+      display: block;
+    }
+
+    .portrait-fallback-svg {
+      display: none;
+    }
+
+    /* ==========================================================================
+       RESEARCH & TEACHING ENTRIES
+       ========================================================================== */
+    .entry-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+    }
+
+    .entry {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      max-width: var(--measure);
+    }
+
+    .entry-meta {
+      color: var(--text-secondary);
+    }
+
+    .entry-title {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: clamp(1.2rem, 1.9vw, 1.4rem);
+      line-height: 1.32;
+      color: var(--text);
+    }
+
+    .entry-title a {
+      color: var(--text);
+      text-decoration-color: var(--rule);
+    }
+
+    .entry-title a:hover {
+      color: var(--accent-text);
+      text-decoration-color: var(--accent);
+    }
+
+    .entry-authors {
+      color: var(--text);
+    }
+
+    .entry-status {
+      color: var(--text-secondary);
+      font-size: 0.96rem;
+    }
+
+    .entry-link-row {
+      margin-top: 0.15rem;
+    }
+
+    .entry-link-row a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      font-size: 0.95rem;
+    }
+
+    /* ==========================================================================
+       POLICY & EVALUATION WORK (BRUTALIST CARDS)
+       ========================================================================== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 680px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.75rem;
+      }
+    }
+
+    /* Brutalist Touch 2: Work Cards
+       Sharp 1px border and unblurred hard offset shadow (4px 4px 0) that shifts to 2px 2px on hover */
+    .work-card {
+      background-color: var(--bg);
+      border: 1px solid var(--accent);
+      box-shadow: 4px 4px 0 var(--accent);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .work-card:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--accent);
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      list-style: none;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.15rem 0.65rem;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .work-card h3 {
+      margin: 0;
+    }
+
+    .work-card p {
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.58;
+    }
+
+    /* ==========================================================================
+       WRITING & EDUCATION
+       ========================================================================== */
+    .writing-intro {
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    .writing-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--rule);
+      max-width: var(--measure);
+    }
+
+    .writing-list li {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .writing-list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 48px;
+      padding: 0.65rem 0;
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 1.12rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .writing-list a:hover {
+      color: var(--accent-text);
+    }
+
+    .writing-arrow {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--accent-text);
+      flex-shrink: 0;
+    }
+
+    .edu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      max-width: var(--measure);
+    }
+
+    .edu-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem 1.5rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .edu-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .edu-degree {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: 1.15rem;
+    }
+
+    /* ==========================================================================
+       FOOTER & MINIATURE TREND DIVIDER
+       ========================================================================== */
+    .footer-trend-divider {
+      width: 100%;
+      height: 28px;
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+
+    .footer-trend-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--rule);
+      padding: 2.25rem 0 3.5rem;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 1.35rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      color: var(--text);
+      text-decoration: underline;
+      text-decoration-color: var(--rule);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-text);
+      text-decoration-color: var(--accent);
+    }
+
+    .footer-updated {
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       PREFERS-REDUCED-MOTION COMPLIANCE
+       Respect prefers-reduced-motion everywhere: no hover movement and no
+       bar/line-drawing animation for those users.
+       ========================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+      .btn-brutalist:hover,
+      .work-card:hover {
+        transform: none !important;
+        box-shadow: 4px 4px 0 var(--accent) !important;
+      }
+      .js-anim-ready .p-bar {
+        transform: scaleY(1) !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. NAVIGATION
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav-bar" aria-label="Primary navigation">
+        <!-- EDIT HERE: Logo filename (logo.png) and Name -->
+        <a href="#" class="brand">
+          <img 
+            src="logo.png" 
+            alt="Imran Hossain logo" 
+            class="brand-logo" 
+            width="28" 
+            height="28"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"
+          >
+          <!-- Clean geometric fallback mark if logo.png is not yet in the directory -->
+          <svg class="brand-logo" style="display:none;" viewBox="0 0 28 28" aria-hidden="true">
+            <rect x="2" y="12" width="6" height="14" fill="var(--accent)"/>
+            <rect x="11" y="5" width="6" height="21" fill="var(--text)"/>
+            <rect x="20" y="9" width="6" height="17" fill="none" stroke="var(--text)" stroke-width="1.5"/>
+          </svg>
+          <span class="brand-name">Imran Hossain</span>
+        </a>
+
+        <div class="nav-controls">
+          <button 
+            type="button" 
+            id="theme-toggle" 
+            class="icon-btn" 
+            aria-label="Switch colour theme"
+          >
+            <!-- Sun Icon (shown in dark mode) -->
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.5"></circle>
+              <line x1="12" y1="2" x2="12" y2="5"></line>
+              <line x1="12" y1="19" x2="12" y2="22"></line>
+              <line x1="4.93" y1="4.93" x2="7.05" y2="7.05"></line>
+              <line x1="16.95" y1="16.95" x2="19.07" y2="19.07"></line>
+              <line x1="2" y1="12" x2="5" y2="12"></line>
+              <line x1="19" y1="12" x2="22" y2="12"></line>
+              <line x1="4.93" y1="19.07" x2="7.05" y2="16.95"></line>
+              <line x1="16.95" y1="7.05" x2="19.07" y2="4.93"></line>
+            </svg>
+            <!-- Moon Icon (shown in light mode) -->
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span id="theme-toggle-text">Theme</span>
+          </button>
+
+          <button 
+            type="button" 
+            id="menu-toggle" 
+            class="icon-btn menu-toggle" 
+            aria-label="Toggle navigation menu" 
+            aria-expanded="false" 
+            aria-controls="primary-nav-list"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="3" y1="7" x2="21" y2="7"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="17" x2="21" y2="17"></line>
+            </svg>
+            <span>Menu</span>
+          </button>
+        </div>
+
+        <!-- EDIT HERE: Navigation Links & CV filename -->
+        <ul id="primary-nav-list" class="nav-links">
+          <li><a href="#research">Research</a></li>
+          <li><a href="#policy">Policy work</a></li>
+          <li><a href="#teaching">Teaching</a></li>
+          <li><a href="#writing">Writing</a></li>
+          <li><a href="Imran_Hossain_CV.pdf" target="_blank" rel="noopener">CV</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         2. HERO SECTION
+         ====================================================================== -->
+    <section class="hero container" aria-label="Introduction">
+      <div class="hero-grid">
+        
+        <!-- Left on Desktop / Second on Mobile: Introduction & Seeded Trend Lines -->
+        <div class="hero-text-col">
+          <!-- Motif B: Seeded Random Walk Trend Lines (generated in JS below) -->
+          <div class="hero-trend-wrap" aria-hidden="true">
+            <svg id="hero-trend-svg" class="hero-trend-svg" preserveAspectRatio="none"></svg>
+          </div>
+
+          <!-- EDIT HERE: Name, Affiliation, and Short Bio -->
+          <h1>Imran Hossain</h1>
+          <p class="affiliation">
+            Research Associate, BRAC Institute of Governance and Development (BIGD), BRAC University
+          </p>
+          <p class="bio">
+            I study development economics, with interests in applied microeconomics, political economy, poverty, inequality and education in Bangladesh. I design surveys, run fieldwork and analyse household data. I am applying to PhD programmes in economics.
+          </p>
+
+          <!-- EDIT HERE: CV file link and Email address -->
+          <div class="hero-actions">
+            <a href="Imran_Hossain_CV.pdf" class="btn-brutalist" target="_blank" rel="noopener">
+              Download CV
+            </a>
+            <a href="mailto:imranh.econ@gmail.com" class="email-link">
+              Email me
+            </a>
+          </div>
+        </div>
+
+        <!-- Right on Desktop / First on Mobile: Portrait & 4 Symbolic Bars -->
+        <div class="hero-visual-col">
+          <div id="portrait-stage" class="portrait-stage">
+            <!-- Motif A: 4 Sharp-Cornered Rectangles Behind Portrait -->
+            <div class="bars-layer" aria-hidden="true">
+              <div class="p-bar p-bar-1"></div>
+              <div class="p-bar p-bar-2"></div>
+              <div class="p-bar p-bar-3"></div>
+              <div class="p-bar p-bar-4"></div>
+            </div>
+
+            <!-- EDIT HERE: Portrait image filename (portrait.webp) -->
+            <img 
+              src="portrait.webp" 
+              alt="Portrait of Imran Hossain" 
+              width="600" 
+              height="720" 
+              loading="eager" 
+              class="portrait-img"
+              onerror="this.style.display='none'; document.getElementById('portrait-fallback').style.display='block';"
+            >
+
+            <!-- Editorial monochrome cutout silhouette fallback if portrait.webp is not yet present locally -->
+            <svg id="portrait-fallback" class="portrait-fallback-svg" viewBox="0 0 300 360" role="img" aria-label="Portrait of Imran Hossain">
+              <defs>
+                <linearGradient id="bwCutoutGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#2B2D33"/>
+                  <stop offset="55%" stop-color="#1A1C20"/>
+                  <stop offset="100%" stop-color="#0E1013"/>
+                </linearGradient>
+              </defs>
+              <!-- Shoulders & Jacket Cutout -->
+              <path d="M28 360 C32 272 78 240 150 240 C222 240 268 272 272 360 Z" fill="url(#bwCutoutGrad)"/>
+              <!-- Shirt Collar highlight -->
+              <polygon points="122,242 150,295 178,242 164,235 150,268 136,235" fill="#DCDAD3"/>
+              <!-- Neck & Head Cutout -->
+              <rect x="131" y="195" width="38" height="54" fill="#23252A"/>
+              <ellipse cx="150" cy="138" rx="48" ry="60" fill="url(#bwCutoutGrad)"/>
+              <path d="M102 128 C100 84 125 66 152 66 C182 66 200 86 198 128 C191 102 174 92 148 92 C124 92 110 105 102 128 Z" fill="#121317"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         3. RESEARCH SECTION
+         ====================================================================== -->
+    <section id="research" class="container">
+      <div class="section-grid">
+        <h2>Research</h2>
+        <div class="entry-list">
+
+          <!-- EDIT HERE: Research Entry 1 -->
+          <article class="entry">
+            <div class="entry-meta">
+              <span class="date">2026</span>
+            </div>
+            <h3 class="entry-title">
+              <a href="https://www.academia.edu/165399931/Does_Crop_Diversification_Improve_Rural_Household_Income_in_Bangladesh" target="_blank" rel="noopener">
+                Does Crop Diversification Improve Rural Household Income in Bangladesh?
+              </a>
+            </h3>
+            <p class="entry-authors">Imran Hossain</p>
+            <p class="entry-status">Working paper</p>
+            <div class="entry-link-row">
+              <a href="https://www.academia.edu/165399931/Does_Crop_Diversification_Improve_Rural_Household_Income_in_Bangladesh" target="_blank" rel="noopener">
+                Read paper &rarr;
+              </a>
+            </div>
+          </article>
+
+          <!-- EDIT HERE: Research Entry 2 -->
+          <article class="entry">
+            <div class="entry-meta">
+              <span class="date">2024</span>
+            </div>
+            <h3 class="entry-title">
+              <a href="https://www.academia.edu/165400200/Does_Institutional_Quality_Matter_for_Financial_Development_Evidence_from_Six_Asian_Emerging_Economies_" target="_blank" rel="noopener">
+                Does Institutional Quality Matter for Financial Development? Evidence from Six Asian Emerging Economies
+              </a>
+            </h3>
+            <p class="entry-authors">Samia Islam, Mohammad Obaidullah, Imran Hossain, Ann Naser Nabil</p>
+            <p class="entry-status">Presented at the 7th SANEM Annual Economists' Conference</p>
+            <div class="entry-link-row">
+              <a href="https://www.academia.edu/165400200/Does_Institutional_Quality_Matter_for_Financial_Development_Evidence_from_Six_Asian_Emerging_Economies_" target="_blank" rel="noopener">
+                Read paper &rarr;
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         4. POLICY AND EVALUATION WORK
+         ====================================================================== -->
+    <section id="policy" class="container">
+      <div class="section-grid">
+        <h2>Policy and evaluation work</h2>
+        <div class="cards-grid">
+
+          <!-- EDIT HERE: Policy Card 1 -->
+          <article class="work-card">
+            <ul class="card-tags" aria-label="Project tags">
+              <li class="tag">Targeting</li>
+              <li class="tag">Survey design</li>
+              <li class="tag">Fieldwork</li>
+            </ul>
+            <h3>Family Card Programme: PMT evaluation</h3>
+            <p>
+              Evaluating the proxy means test scoring system: designed the questionnaire, trained enumerators, coordinated fieldwork and drafted the report.
+            </p>
+          </article>
+
+          <!-- EDIT HERE: Policy Card 2 -->
+          <article class="work-card">
+            <ul class="card-tags" aria-label="Project tags">
+              <li class="tag">Panel data</li>
+              <li class="tag">Poverty</li>
+            </ul>
+            <h3>UPGP intergenerational panel</h3>
+            <p>
+              Data management for a panel following BRAC Ultra-Poor Graduation Programme households across generations.
+            </p>
+          </article>
+
+          <!-- EDIT HERE: Policy Card 3 -->
+          <article class="work-card">
+            <ul class="card-tags" aria-label="Project tags">
+              <li class="tag">Gender</li>
+              <li class="tag">RCT</li>
+            </ul>
+            <h3>No Means No adaptation for an RCT</h3>
+            <p>
+              Helped adapt a self-defence curriculum for adolescent girls for a randomised evaluation.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. TEACHING AND OUTREACH
+         ====================================================================== -->
+    <section id="teaching" class="container">
+      <div class="section-grid">
+        <h2>Teaching and outreach</h2>
+        <div class="entry-list">
+
+          <!-- EDIT HERE: Teaching Entry 1 -->
+          <article class="entry">
+            <div class="entry-meta">
+              <span class="date">2026</span>
+            </div>
+            <h3 class="entry-title">A Backbencher's Guide to Econometrics</h3>
+            <p>
+              A plain-language introductory econometrics booklet, printed on a not-for-profit basis and used by over 100 students and 20 university teachers in Bangladesh.
+            </p>
+          </article>
+
+          <!-- EDIT HERE: Teaching Entry 2 -->
+          <article class="entry">
+            <div class="entry-meta">
+              <span class="date">In progress</span>
+            </div>
+            <h3 class="entry-title">Bangla translation of <em>Good Economics for Hard Times</em></h3>
+            <p>
+              By Abhijit V. Banerjee and Esther Duflo.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. WRITING
+         ====================================================================== -->
+    <section id="writing" class="container">
+      <div class="section-grid">
+        <h2>Writing</h2>
+        <div>
+          <!-- EDIT HERE: Writing summary sentence -->
+          <p class="writing-intro">
+            Between <span class="date">2024</span> and <span class="date">2026</span>, I wrote over a hundred research-driven features for <em>The Business Standard</em>.
+          </p>
+
+          <!-- EDIT HERE: Correct the 5 article titles below if the exact published headlines differ -->
+          <ul class="writing-list">
+            <li>
+              <!-- EDIT HERE: Verify article title 1 -->
+              <a href="https://www.tbsnews.net/features/panorama/phd-landscape-bangladesh-reality-check-1090906" target="_blank" rel="noopener">
+                <span>The PhD landscape in Bangladesh: A reality check</span>
+                <span class="writing-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </li>
+            <li>
+              <!-- EDIT HERE: Verify article title 2 -->
+              <a href="https://www.tbsnews.net/features/panorama/how-crypto-thrives-bangladeshs-legal-grey-zone-1137576" target="_blank" rel="noopener">
+                <span>How crypto thrives in Bangladesh's legal grey zone</span>
+                <span class="writing-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </li>
+            <li>
+              <!-- EDIT HERE: Verify article title 3 -->
+              <a href="https://www.tbsnews.net/features/panorama/what-about-our-own-adolescents-1124121" target="_blank" rel="noopener">
+                <span>What about our own adolescents?</span>
+                <span class="writing-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </li>
+            <li>
+              <!-- EDIT HERE: Verify article title 4 -->
+              <a href="https://www.tbsnews.net/features/panorama/online-moral-police-forces-cracking-down-interfaith-relationships-1056001" target="_blank" rel="noopener">
+                <span>Online moral police forces cracking down on interfaith relationships</span>
+                <span class="writing-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </li>
+            <li>
+              <!-- EDIT HERE: Verify article title 5 -->
+              <a href="https://www.tbsnews.net/features/panorama/dhakas-buried-past-archaeological-excavation-unveils-new-history-988176" target="_blank" rel="noopener">
+                <span>Dhaka's buried past: Archaeological excavation unveils new history</span>
+                <span class="writing-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         7. EDUCATION
+         ====================================================================== -->
+    <section id="education" class="container">
+      <div class="section-grid">
+        <h2>Education</h2>
+        <!-- EDIT HERE: Education lines -->
+        <ul class="edu-list">
+          <li class="edu-item">
+            <div>
+              <span class="edu-degree">MS in Mathematics</span>, Ahsanullah University of Science and Technology
+            </div>
+            <span class="date">2025–present</span>
+          </li>
+          <li class="edu-item">
+            <div>
+              <span class="edu-degree">BSc in Economics</span>, Jahangirnagar University
+            </div>
+            <span class="date">2024</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- Reused smaller version of the trend lines as a thin divider above the footer -->
+  <div class="container" aria-hidden="true">
+    <div class="footer-trend-divider">
+      <svg id="footer-trend-svg" class="footer-trend-svg" preserveAspectRatio="none"></svg>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       8. FOOTER
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <!-- EDIT HERE: Footer Email and Social Links -->
+      <ul class="footer-links">
+        <li><a href="mailto:hossain.imran@bracu.ac.bd">hossain.imran@bracu.ac.bd</a></li>
+        <li><a href="mailto:imranh.econ@gmail.com">imranh.econ@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/imranh47/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/ImranH47" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://x.com/ImranH_47/" target="_blank" rel="noopener">X</a></li>
+      </ul>
+
+      <!-- EDIT HERE: Last updated date -->
+      <p class="footer-updated date">Last updated October 2026</p>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       VANILLA JAVASCRIPT: THEME, MOBILE MENU & SYMBOLIC DATA VISUALIZATIONS
+       ======================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ======================================================================
+         // EDIT HERE: SYMBOLIC DATA VISUALIZATION SETTINGS
+         Adjust the random seed, number of hairline trend lines, step count,
+         stroke widths, opacities, and animation timing below.
+         ====================================================================== */
+      const VIZ_CONFIG = {
+        seed: 20261017,              // Seed for reproducible random walk trend lines
+        numLines: 4,                 // Total number of trend lines (including primary line)
+        steps: 68,                   // Horizontal segments per line
+        volatility: 5.8,             // Vertical random walk step variance
+        upwardDrift: -0.42,          // Negative SVG Y drift = subtle upward trajectory
+        faintOpacity: 0.22,          // Opacity for background hairline trend lines
+        strongOpacity: 0.62,         // Opacity for the main highlighted trend line
+        faintStrokeWidth: 1.1,       // 1–1.5px hairline width
+        strongStrokeWidth: 1.5,      // Stronger line width
+        endDotRadius: 3.2,           // Radius of the dot at the end of the stronger line
+        barsTotalDurationMs: 800,    // Time for the 4 portrait bars to finish growing (~0.8s)
+        trendDrawDurationMs: 2000    // Time for trend lines to draw left-to-right (~2.0s)
+      };
+
+      /* ======================================================================
+         1. THEME TOGGLE & SYSTEM PREFERENCE LISTENER
+         ====================================================================== */
+      const rootEl = document.documentElement;
+      const themeBtn = document.getElementById('theme-toggle');
+      const themeBtnText = document.getElementById('theme-toggle-text');
+
+      function updateThemeUI(theme) {
+        if (themeBtnText) {
+          themeBtnText.textContent = theme === 'dark' ? 'Light' : 'Dark';
+        }
+        if (themeBtn) {
+          themeBtn.setAttribute(
+            'aria-label',
+            theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+          );
+        }
+      }
+
+      updateThemeUI(rootEl.getAttribute('data-theme') || 'light');
+
+      if (themeBtn) {
+        themeBtn.addEventListener('click', function () {
+          const current = rootEl.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+          const next = current === 'dark' ? 'light' : 'dark';
+          rootEl.setAttribute('data-theme', next);
+          try {
+            localStorage.setItem('theme', next);
+          } catch (e) {}
+          updateThemeUI(next);
+        });
+      }
+
+      // Listen for OS theme changes if visitor hasn't manually overridden localStorage
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+        try {
+          if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            rootEl.setAttribute('data-theme', newTheme);
+            updateThemeUI(newTheme);
+          }
+        } catch (err) {}
+      });
+
+      /* ======================================================================
+         2. MOBILE NAVIGATION MENU TOGGLE
+         ====================================================================== */
+      const menuBtn = document.getElementById('menu-toggle');
+      const navList = document.getElementById('primary-nav-list');
+
+      if (menuBtn && navList) {
+        menuBtn.addEventListener('click', function () {
+          const isOpen = navList.classList.toggle('is-open');
+          menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Close mobile menu when a link is selected
+        navList.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            if (navList.classList.contains('is-open')) {
+              navList.classList.remove('is-open');
+              menuBtn.setAttribute('aria-expanded', 'false');
+            }
+          });
+        });
+      }
+
+      /* ======================================================================
+         3. SEEDED PRNG (MULBERRY32) & TREND LINE GENERATOR
+         ====================================================================== */
+      function createSeededRandom(seed) {
+        let a = seed >>> 0;
+        return function () {
+          let t = (a += 0x6D2B79F5);
+          t = Math.imul(t ^ (t >>> 15), t | 1);
+          t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+
+      function buildTrendSVG(svgEl, options) {
+        if (!svgEl) return null;
+        const width = options.width;
+        const height = options.height;
+        const animate = options.animate;
+        const seedOffset = options.seedOffset || 0;
+
+        svgEl.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
+        svgEl.innerHTML = '';
+
+        const rng = createSeededRandom(VIZ_CONFIG.seed + seedOffset);
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const animatedPaths = [];
+        let endDot = null;
+
+        for (let i = 0; i < VIZ_CONFIG.numLines; i++) {
+          const isPrimary = i === VIZ_CONFIG.numLines - 1;
+          let y = height * (0.58 + (rng() - 0.5) * 0.28);
+          const points = [];
+
+          for (let s = 0; s <= VIZ_CONFIG.steps; s++) {
+            const x = (s / VIZ_CONFIG.steps) * (width - 12);
+            points.push({ x: x, y: y });
+
+            const delta = (rng() - 0.5) * 2 * VIZ_CONFIG.volatility + VIZ_CONFIG.upwardDrift;
+            y = Math.max(height * 0.12, Math.min(height * 0.88, y + delta));
+          }
+
+          const pathData = points
+            .map(function (pt, idx) {
+              return (idx === 0 ? 'M ' : 'L ') + pt.x.toFixed(1) + ' ' + pt.y.toFixed(1);
+            })
+            .join(' ');
+
+          const path = document.createElementNS(svgNS, 'path');
+          path.setAttribute('d', pathData);
+          path.setAttribute('fill', 'none');
+          path.setAttribute('stroke', 'var(--accent)');
+          path.setAttribute(
+            'stroke-width',
+            isPrimary ? VIZ_CONFIG.strongStrokeWidth : VIZ_CONFIG.faintStrokeWidth
+          );
+          path.setAttribute(
+            'stroke-opacity',
+            isPrimary ? VIZ_CONFIG.strongOpacity : VIZ_CONFIG.faintOpacity
+          );
+          path.setAttribute('vector-effect', 'non-scaling-stroke');
+          svgEl.appendChild(path);
+
+          if (animate) {
+            const totalLength = path.getTotalLength();
+            path.style.strokeDasharray = String(totalLength);
+            path.style.strokeDashoffset = String(totalLength);
+            animatedPaths.push(path);
+          }
+
+          if (isPrimary) {
+            const lastPt = points[points.length - 1];
+            const circle = document.createElementNS(svgNS, 'circle');
+            circle.setAttribute('cx', lastPt.x.toFixed(1));
+            circle.setAttribute('cy', lastPt.y.toFixed(1));
+            circle.setAttribute('r', String(VIZ_CONFIG.endDotRadius));
+            circle.setAttribute('fill', 'var(--accent)');
+            circle.setAttribute('fill-opacity', String(VIZ_CONFIG.strongOpacity + 0.25));
+            if (animate) {
+              circle.style.opacity = '0';
+              circle.style.transition = 'opacity 0.25s ease';
+            }
+            svgEl.appendChild(circle);
+            endDot = circle;
+          }
+        }
+
+        return { paths: animatedPaths, dot: endDot };
+      }
+
+      /* ======================================================================
+         4. INITIALIZE VISUALIZATIONS & RESPECT PREFERS-REDUCED-MOTION
+         ====================================================================== */
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const portraitStage = document.getElementById('portrait-stage');
+      const heroSvg = document.getElementById('hero-trend-svg');
+      const footerSvg = document.getElementById('footer-trend-svg');
+
+      // Build Hero Trend Lines & Footer Divider Trend Lines
+      const heroTrend = buildTrendSVG(heroSvg, {
+        width: 640,
+        height: 260,
+        animate: !prefersReducedMotion,
+        seedOffset: 0
+      });
+
+      buildTrendSVG(footerSvg, {
+        width: 1000,
+        height: 36,
+        animate: false,
+        seedOffset: 99
+      });
+
+      if (!prefersReducedMotion && portraitStage) {
+        // Prepare portrait bars for staggered upward growth
+        portraitStage.classList.add('js-anim-ready');
+
+        window.addEventListener('load', function () {
+          // Step 1: Grow the 4 portrait bars upward (~0.8s total)
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              portraitStage.classList.add('bars-grown');
+            });
+          });
+
+          // Step 2: After bars finish, draw trend lines left-to-right over ~2 seconds
+          setTimeout(function () {
+            if (!heroTrend) return;
+            const durationSec = (VIZ_CONFIG.trendDrawDurationMs / 1000).toFixed(2);
+            heroTrend.paths.forEach(function (path) {
+              path.style.transition = 'stroke-dashoffset ' + durationSec + 's cubic-bezier(0.25, 0.8, 0.25, 1)';
+              path.style.strokeDashoffset = '0';
+            });
+
+            // Reveal endpoint dot when primary line finishes drawing
+            if (heroTrend.dot) {
+              setTimeout(function () {
+                heroTrend.dot.style.opacity = '1';
+              }, VIZ_CONFIG.trendDrawDurationMs - 150);
+            }
+          }, VIZ_CONFIG.barsTotalDurationMs);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

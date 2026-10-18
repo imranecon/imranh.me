@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- EDIT HERE: page title and search-engine description -->
+<title>Imran Hossain | Development Economics</title>
+<meta name="description" content="Imran Hossain is a Research Associate at the BRAC Institute of Governance and Development (BIGD), BRAC University, working on development economics, poverty, inequality and education in Bangladesh.">
+<meta name="author" content="Imran Hossain">
+
+<!-- EDIT HERE: your site address. Open Graph previews need full (absolute) URLs,
+     so change https://imranh.me/ everywhere below if the site lives elsewhere. -->
+<link rel="canonical" href="https://imranh.me/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Imran Hossain">
+<meta property="og:url" content="https://imranh.me/">
+<meta property="og:title" content="Imran Hossain | Development Economics">
+<meta property="og:description" content="Research Associate at BIGD, BRAC University, working on development economics, poverty, inequality and education in Bangladesh.">
+<!-- EDIT HERE: preview image file and its real pixel size (1200 × 630 is the usual size) -->
+<meta property="og:image" content="https://imranh.me/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Imran Hossain, development economics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ImranH_47">
+
+<!-- EDIT HERE: favicon file -->
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<!-- Browser UI colour on phones; the script below keeps it in step with the theme -->
+<meta name="theme-color" content="#F7F6F2">
+
+<!-- EDIT HERE: font file names (preloading the two main faces avoids a late font swap) -->
+<link rel="preload" href="OTJubilee-DiamondMedium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="PPNikkeiJournal-Light.woff2" as="font" type="font/woff2" crossorigin>
+
+<script>
+  /* Theme, set before the first paint so the page never flashes the wrong colours.
+     Order of preference: the visitor's saved choice, then their system setting. */
+  (function () {
+    var root = document.documentElement;
+    root.classList.add('js');
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    var theme = (saved === 'light' || saved === 'dark') ? saved
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    root.setAttribute('data-theme', theme);
+  })();
+</script>
+
+<style>
+/* ==========================================================================
+   1. FONTS
+   Files sit in the same folder as index.html. Only these four faces exist:
+   serif 500 (normal + italic) and sans 300 (normal + italic).
+   ========================================================================== */
+
+/* EDIT HERE: font file names */
+@font-face {
+  font-family: "OT Jubilee";
+  src: url("OTJubilee-DiamondMedium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OT Jubilee";
+  src: url("OTJubilee-DiamondMediumItalic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PP Nikkei Journal";
+  src: url("PPNikkeiJournal-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PP Nikkei Journal";
+  src: url("PPNikkeiJournal-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   2. DESIGN TOKENS
+   ========================================================================== */
+:root {
+  /* EDIT HERE: light palette */
+  --light-bg: #F7F6F2;
+  --light-text: #16181D;
+  --light-text-2: #5C5F66;        /* secondary text */
+  --light-rule: #D9D6CE;          /* 1px section rules */
+  --light-accent: #FF4F00;        /* graphics, borders, shadows */
+  --light-accent-text: #B23400;   /* links and small accent text (darker, for contrast) */
+  --light-bar-neutral: #E9E6DE;   /* tallest portrait bar */
+
+  /* EDIT HERE: dark palette */
+  --dark-bg: #0E1015;
+  --dark-text: #ECEAE4;
+  --dark-text-2: #9A9CA3;
+  --dark-rule: #2A2D35;
+  --dark-accent: #FF4F00;
+  --dark-accent-text: #FF4F00;
+  --dark-bar-neutral: #3A3E48;
+
+  /* Active colours (light by default; the dark blocks below swap them).
+     Everything on the page uses these names, never the hex values directly. */
+  --bg: var(--light-bg);
+  --text: var(--light-text);
+  --text-2: var(--light-text-2);
+  --rule: var(--light-rule);
+  --accent: var(--light-accent);
+  --accent-text: var(--light-accent-text);
+  --bar-neutral: var(--light-bar-neutral);
+  color-scheme: light;
+
+  /* EDIT HERE: colour of the brutalist border and hard shadow (CV button + work cards).
+     The brief puts both in the accent; set --brutal-line to var(--text) for an ink border. */
+  --brutal-line: var(--accent);
+  --brutal-shadow: var(--accent);
+
+  /* Type families (fallbacks are used until the local files load) */
+  --font-serif: "OT Jubilee", Georgia, "Times New Roman", serif;
+  --font-sans: "PP Nikkei Journal", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Modular type scale: ratio about 1.25 on phones, rising towards 1.33 on wide screens.
+     Body (step-0) is 17px on phones and 18px from roughly 950px wide. */
+  --step--1: clamp(0.875rem, 0.86rem + 0.07vw, 0.9375rem);   /* 14 → 15px  dates, tags, notes */
+  --step-0:  clamp(1.0625rem, 1.03rem + 0.16vw, 1.125rem);   /* 17 → 18px  body */
+  --step-1:  clamp(1.3125rem, 1.24rem + 0.36vw, 1.5rem);     /* 21 → 24px  paper and card titles */
+  --step-2:  clamp(1.625rem, 1.48rem + 0.72vw, 2rem);        /* 26 → 32px  section headings */
+  --step-4:  clamp(2.5rem, 1.9rem + 3vw, 4.5rem);            /* 40 → 72px  name */
+
+  /* Layout */
+  --max-width: 72rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --measure: 65ch;          /* longest comfortable line of text */
+  --header-height: 4rem;
+}
+
+/* Dark theme: chosen with the toggle, or the system setting via the <head> script */
+:root[data-theme="dark"] {
+  --bg: var(--dark-bg);
+  --text: var(--dark-text);
+  --text-2: var(--dark-text-2);
+  --rule: var(--dark-rule);
+  --accent: var(--dark-accent);
+  --accent-text: var(--dark-accent-text);
+  --bar-neutral: var(--dark-bar-neutral);
+  color-scheme: dark;
+}
+/* Same swap for visitors with JavaScript switched off (keep in step with the block above) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: var(--dark-bg);
+    --text: var(--dark-text);
+    --text-2: var(--dark-text-2);
+    --rule: var(--dark-rule);
+    --accent: var(--dark-accent);
+    --accent-text: var(--dark-accent-text);
+    --bar-neutral: var(--dark-bar-neutral);
+    color-scheme: dark;
+  }
+}
+
+/* ==========================================================================
+   3. BASE
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-synthesis: none;            /* never fake a bold or italic the fonts don't have */
+  scroll-padding-top: calc(var(--header-height) + 1rem);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: var(--step-0);
+  line-height: 1.65;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+p { margin: 0; text-wrap: pretty; }
+ul { margin: 0; padding: 0; list-style: none; }
+img { max-width: 100%; }
+
+/* The sans has no bold: emphasis comes from italics or the serif instead */
+strong, b { font-weight: inherit; }
+em, i, cite { font-style: italic; }
+
+a {
+  color: var(--accent-text);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+}
+a:hover { text-decoration-color: currentColor; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -10rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  color: var(--text);
+}
+.skip-link:focus { top: 1rem; }
+
+/* Centred column used by every block */
+.wrap {
+  width: min(100% - 2 * var(--gutter), var(--max-width));
+  margin-inline: auto;
+}
+
+/* ==========================================================================
+   4. HEADER AND NAVIGATION
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1rem;
+  min-height: var(--header-height);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 44px;
+  margin-right: auto;
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.1875rem;
+  line-height: 1;
+  text-decoration: none;
+}
+.brand img {
+  display: block;
+  height: 2rem;
+  width: auto;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.5rem;
+}
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text-2);
+  font-size: 1rem;
+  text-decoration: none;
+}
+.nav-links a:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+}
+
+/* Theme toggle and menu button share the same quiet button style */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.5rem;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.theme-toggle svg { display: block; }
+:root[data-theme="dark"] .theme-toggle svg { transform: rotate(180deg); }
+
+/* Menu button only exists for phones, and only when JavaScript runs.
+   Without JavaScript the links simply wrap onto a second line. */
+.menu-btn { display: none; }
+
+@media (max-width: 51.99rem) {
+  .js .menu-btn { display: inline-flex; }
+  .js .nav-links { display: none; }
+  .js .site-header.is-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 0.5rem var(--gutter) 1rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+  }
+  .js .site-header.is-open .nav-links a {
+    display: flex;
+    min-height: 48px;
+    color: var(--text);
+    font-size: var(--step-0);
+  }
+  /* Without JavaScript, links sit on their own row under the name */
+  html:not(.js) .site-nav { order: 3; width: 100%; padding-bottom: 0.25rem; }
+}
+
+/* ==========================================================================
+   5. HERO
+   ========================================================================== */
+.hero {
+  --hero-gap: clamp(2.5rem, 5vw, 5rem);
+  display: grid;
+  gap: 2.25rem;
+  padding-block: clamp(1.75rem, 5vw, 4rem) 0;   /* no bottom padding: the hero ends on the next rule */
+}
+
+.hero-text {
+  /* EDIT HERE: height of the strip the trend lines run through, under the buttons */
+  --trend-band: clamp(4.5rem, 9vw, 7rem);
+  position: relative;
+  isolation: isolate;          /* keeps the trend lines behind the text only */
+  padding-bottom: calc(var(--trend-band) + 0.75rem);
+}
+.hero-name {
+  font-size: var(--step-4);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+.hero-role {
+  margin-top: 1rem;
+  max-width: 44ch;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.hero-bio {
+  margin-top: 1.5rem;
+  max-width: var(--measure);
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 2rem;
+}
+
+/* Portrait comes first on phones */
+.hero-visual {
+  order: -1;
+  position: relative;
+}
+
+/* ---------- 5a. Portrait bars ------------------------------------------- */
+.portrait-stage {
+  /* ======================================================================
+     EDIT HERE: portrait bar composition
+     x and width are % of the stage width; height is % of the stage height.
+     Every bar stands on the same baseline (the bottom of the stage).
+     "order" is the bar's place in the load animation (0 grows first).
+     ====================================================================== */
+  --stage-ratio: 1 / 1;          /* width / height of the whole composition */
+
+  /* Bar 1: tallest, soft neutral fill, directly behind head and shoulders */
+  --bar1-x: 18%;  --bar1-w: 50%;  --bar1-h: 84%;  --bar1-order: 1;
+  /* Bar 2: solid accent orange */
+  --bar2-x: 60%;  --bar2-w: 22%;  --bar2-h: 60%;  --bar2-order: 2;
+  /* Bar 3: no fill, 1px border in the text colour */
+  --bar3-x: 76%;  --bar3-w: 24%;  --bar3-h: 42%;  --bar3-order: 3;
+  /* Bar 4: shortest, thin diagonal hatch in the secondary text colour */
+  --bar4-x: 0%;   --bar4-w: 26%;  --bar4-h: 24%;  --bar4-order: 0;
+  --hatch-gap: 6px;              /* distance between hatch lines */
+
+  /* Portrait placement (set the <img> width/height attributes to the real file size) */
+  --portrait-x: 14%;             /* left edge of the portrait */
+  --portrait-w: 58%;             /* portrait width */
+  --portrait-y: 0%;              /* nudge up (+) if the cutout has empty space at the bottom */
+
+  /* Load animation: total time = 3 × stagger + duration = 0.8 s */
+  --bar-duration: 440ms;
+  --bar-stagger: 120ms;
+
+  position: relative;
+  width: min(80%, 20rem);        /* smaller on phones */
+  aspect-ratio: var(--stage-ratio);
+  isolation: isolate;
+}
+
+.bar {
+  position: absolute;
+  bottom: 0;
+  left: var(--x);
+  width: var(--w);
+  height: var(--h);
+}
+.bar--1 {
+  --x: var(--bar1-x); --w: var(--bar1-w); --h: var(--bar1-h); --order: var(--bar1-order);
+  z-index: 1;
+  background: var(--bar-neutral);
+}
+.bar--2 {
+  --x: var(--bar2-x); --w: var(--bar2-w); --h: var(--bar2-h); --order: var(--bar2-order);
+  z-index: 2;
+  background: var(--accent);
+}
+.bar--3 {
+  --x: var(--bar3-x); --w: var(--bar3-w); --h: var(--bar3-h); --order: var(--bar3-order);
+  z-index: 3;
+  border: 1px solid var(--text);
+}
+.bar--4 {
+  --x: var(--bar4-x); --w: var(--bar4-w); --h: var(--bar4-h); --order: var(--bar4-order);
+  z-index: 2;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--text-2) 0 1px,
+    transparent 1px var(--hatch-gap)
+  );
+}
+
+.portrait {
+  position: absolute;
+  left: var(--portrait-x);
+  bottom: var(--portrait-y);
+  z-index: 4;
+  display: block;
+  width: var(--portrait-w);
+  height: auto;
+  max-width: none;
+}
+
+/* Baseline under the bars on phones (on wide screens the section rule below does this job) */
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* Bars grow upward from the baseline, one after another, then stay still */
+@media (prefers-reduced-motion: no-preference) {
+  .bar {
+    animation: bar-grow var(--bar-duration) cubic-bezier(0.2, 0.7, 0.3, 1) both;
+    animation-delay: calc(var(--order) * var(--bar-stagger));
+  }
+}
+@keyframes bar-grow {
+  from { clip-path: inset(100% 0 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* ---------- 5b. Trend lines --------------------------------------------- */
+/* Drawn by the script at the bottom of the page; settings live in TREND_SETTINGS */
+.trend {
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+}
+.trend path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;   /* lines stay hairline however the box stretches */
+}
+.trend--hero {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--trend-band);   /* lines run under the buttons, down to the baseline */
+}
+
+/* ---------- Wide screens: text left, portrait right --------------------- */
+@media (min-width: 56rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    column-gap: var(--hero-gap);
+    padding-bottom: 0;           /* bars rest on the rule of the next section */
+  }
+  .hero-text {
+    align-self: end;
+    padding-top: 1rem;
+  }
+  .hero-visual {
+    order: 0;
+    align-self: end;
+  }
+  .hero-visual::after { display: none; }
+  .portrait-stage {
+    width: 100%;
+    max-width: 30rem;
+    margin-left: auto;
+  }
+  .trend--hero {
+    right: auto;
+    width: calc(100% + var(--hero-gap) - 0.75rem);   /* lines reach across the gap towards the bars */
+  }
+}
+
+/* ==========================================================================
+   6. BUTTONS AND THE ONE BRUTALIST TOUCH
+   ========================================================================== */
+.brutal {
+  border: 1px solid var(--brutal-line);
+  box-shadow: 4px 4px 0 var(--brutal-shadow);
+}
+@media (hover: hover) {
+  .brutal:hover { box-shadow: 2px 2px 0 var(--brutal-shadow); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .brutal { transition: box-shadow 120ms ease-out, transform 120ms ease-out; }
+  .brutal:hover { transform: translate(2px, 2px); }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0.65rem 1.3rem;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* ==========================================================================
+   7. SECTIONS
+   ========================================================================== */
+.section {
+  border-top: 1px solid var(--rule);
+  padding-block: clamp(3rem, 7vw, 5.5rem);
+}
+.section-inner {
+  display: grid;
+  gap: 1.75rem;
+}
+.section-title { font-size: var(--step-2); }
+
+/* Wide screens: heading in a narrow left column, content on the right */
+@media (min-width: 64rem) {
+  .section-inner {
+    grid-template-columns: 14rem minmax(0, 1fr);
+    column-gap: 3rem;
+  }
+  .section-title { padding-top: 0.1em; }
+}
+
+/* ---------- Dated entries (research, teaching, education) --------------- */
+.entries {
+  display: grid;
+  gap: 2.25rem;
+  max-width: 46rem;
+}
+.entry {
+  display: grid;
+  gap: 0.25rem;
+}
+.entry-date {
+  color: var(--text-2);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1.4;
+}
+.entry-body > * + * { margin-top: 0.35rem; }
+.entry-title {
+  font-size: var(--step-1);
+  line-height: 1.25;
+}
+.entry-meta { color: var(--text-2); }
+.entry-status {
+  color: var(--text-2);
+  font-style: italic;
+}
+.entry-body .entry-link { margin-top: 0.5rem; }
+.entry-link a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.me { color: var(--text); }     /* your own name within an author list */
+
+@media (min-width: 40rem) {
+  .entry {
+    grid-template-columns: 7rem minmax(0, 1fr);
+    column-gap: 1.5rem;
+    align-items: baseline;      /* date lines up with the first line of the title */
+  }
+}
+
+/* ---------- Policy and evaluation cards --------------------------------- */
+.cards {
+  display: grid;
+  gap: 1.75rem;
+  padding: 0 4px 4px 0;          /* room for the hard shadow */
+}
+@media (min-width: 48rem) {
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: var(--bg);
+}
+.card-title {
+  font-size: var(--step-1);
+  line-height: 1.22;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;              /* tags sit on the bottom edge of every card */
+  padding-top: 0.5rem;
+}
+.tag {
+  padding: 0.3em 0.8em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: var(--text-2);
+  font-size: var(--step--1);
+  line-height: 1.3;
+}
+
+/* ---------- Writing ------------------------------------------------------ */
+.writing-intro { max-width: var(--measure); }
+.writing-list {
+  max-width: 46rem;
+  margin-top: 1.25rem;
+}
+.writing-list a {
+  display: block;
+  padding-block: 0.5rem;          /* at least 44px tall to tap */
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.32;
+}
+
+/* ---------- Education ---------------------------------------------------- */
+.edu {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 46rem;
+}
+.edu .entry { row-gap: 0; }
+.edu-place { color: var(--text-2); }
+
+/* ==========================================================================
+   8. FOOTER
+   ========================================================================== */
+.site-footer { padding-bottom: 3rem; }
+.trend--divider {
+  width: 100%;
+  height: 32px;
+  margin-bottom: 2rem;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.5rem;
+}
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  overflow-wrap: anywhere;
+}
+.footer-note {
+  margin-top: 0.75rem;
+  color: var(--text-2);
+  font-size: var(--step--1);
+}
+</style>
+</head>
+
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ========================================================================
+     HEADER
+     ======================================================================== -->
+<header class="site-header">
+  <div class="header-inner wrap">
+    <!-- EDIT HERE: logo file. Set width/height to the logo's real pixel size (any
+         size with the right proportions works). The alt text is empty on purpose:
+         the name sits right beside it, so screen readers don't hear it twice. -->
+    <a class="brand" href="#top">
+      <img src="logo.png" alt="" width="32" height="32">
+      <span>Imran Hossain</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main">
+      <!-- EDIT HERE: navigation links -->
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#research">Research</a></li>
+        <li><a href="#policy">Policy work</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#writing">Writing</a></li>
+        <li><a href="Imran_Hossain_CV.pdf" target="_blank" rel="noopener">CV</a></li>
+      </ul>
+    </nav>
+
+    <button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme">
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10 1.75a8.25 8.25 0 0 1 0 16.5z" fill="currentColor"/>
+      </svg>
+    </button>
+
+    <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+      <span class="menu-btn-text">Menu</span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ======================================================================
+       HERO
+       ====================================================================== -->
+  <section class="hero wrap" aria-labelledby="hero-name">
+    <div class="hero-text">
+      <!-- EDIT HERE: name, role and bio -->
+      <h1 class="hero-name" id="hero-name">Imran Hossain</h1>
+      <p class="hero-role">Research Associate, BRAC Institute of Governance and Development (BIGD), BRAC University</p>
+      <p class="hero-bio">I study development economics, with interests in applied microeconomics, political economy, poverty, inequality and education in Bangladesh. I design surveys, run fieldwork and analyse household data. I am applying to PhD programmes in economics.</p>
+
+      <div class="hero-actions">
+        <!-- EDIT HERE: CV file and email address -->
+        <a class="btn brutal" href="Imran_Hossain_CV.pdf" download>Download CV</a>
+        <a class="text-link" href="mailto:imranh.econ@gmail.com">Email me</a>
+      </div>
+
+      <!-- Trend lines: filled in by the script at the bottom (see TREND_SETTINGS) -->
+      <svg class="trend trend--hero" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true" focusable="false"></svg>
+    </div>
+
+    <div class="hero-visual">
+      <div class="portrait-stage">
+        <!-- Abstract bars, not real data. Sizes and colours: see "EDIT HERE: portrait bar composition" in the CSS -->
+        <div class="bar bar--1" aria-hidden="true"></div>
+        <div class="bar bar--2" aria-hidden="true"></div>
+        <div class="bar bar--3" aria-hidden="true"></div>
+        <div class="bar bar--4" aria-hidden="true"></div>
+        <!-- EDIT HERE: portrait file. Set width and height to the file's real pixel size
+             so the page doesn't jump while it loads. -->
+        <img class="portrait" src="portrait.webp" width="800" height="1000"
+             alt="Portrait of Imran Hossain" loading="eager" fetchpriority="high" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       RESEARCH
+       ====================================================================== -->
+  <section class="section wrap" id="research" aria-labelledby="research-title">
+    <div class="section-inner">
+      <h2 class="section-title" id="research-title">Research</h2>
+
+      <!-- EDIT HERE: papers (copy one <li class="entry"> block to add another) -->
+      <ul class="entries">
+        <li class="entry">
+          <p class="entry-date">2026</p>
+          <div class="entry-body">
+            <h3 class="entry-title">Does Crop Diversification Improve Rural Household Income in Bangladesh?</h3>
+            <p class="entry-meta"><span class="me">Imran Hossain</span></p>
+            <p class="entry-status">Working paper</p>
+            <p class="entry-link"><a href="https://www.academia.edu/165399931/Does_Crop_Diversification_Improve_Rural_Household_Income_in_Bangladesh" target="_blank" rel="noopener">Read on Academia.edu</a></p>
+          </div>
+        </li>
+
+        <li class="entry">
+          <p class="entry-date">2024</p>
+          <div class="entry-body">
+            <h3 class="entry-title">Does Institutional Quality Matter for Financial Development? Evidence from Six Asian Emerging Economies</h3>
+            <p class="entry-meta">Samia Islam, Mohammad Obaidullah, <span class="me">Imran Hossain</span>, Ann Naser Nabil</p>
+            <p class="entry-status">Presented at the 7th SANEM Annual Economists’ Conference</p>
+            <p class="entry-link"><a href="https://www.academia.edu/165400200/Does_Institutional_Quality_Matter_for_Financial_Development_Evidence_from_Six_Asian_Emerging_Economies_" target="_blank" rel="noopener">Read on Academia.edu</a></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       POLICY AND EVALUATION WORK
+       ====================================================================== -->
+  <section class="section wrap" id="policy" aria-labelledby="policy-title">
+    <div class="section-inner">
+      <h2 class="section-title" id="policy-title">Policy and evaluation work</h2>
+
+      <!-- EDIT HERE: project cards (copy one <li class="card brutal"> block to add another) -->
+      <ul class="cards">
+        <li class="card brutal">
+          <h3 class="card-title">Family Card Programme: PMT evaluation</h3>
+          <p>Evaluating the proxy means test scoring system: designed the questionnaire, trained enumerators, coordinated fieldwork and drafted the report.</p>
+          <ul class="tags" aria-label="Topics">
+            <li class="tag">Targeting</li>
+            <li class="tag">Survey design</li>
+            <li class="tag">Fieldwork</li>
+          </ul>
+        </li>
+
+        <li class="card brutal">
+          <h3 class="card-title">UPGP intergenerational panel</h3>
+          <p>Data management for a panel following BRAC Ultra-Poor Graduation Programme households across generations.</p>
+          <ul class="tags" aria-label="Topics">
+            <li class="tag">Panel data</li>
+            <li class="tag">Poverty</li>
+          </ul>
+        </li>
+
+        <li class="card brutal">
+          <h3 class="card-title">No Means No adaptation for an RCT</h3>
+          <p>Helped adapt a self-defence curriculum for adolescent girls for a randomised evaluation.</p>
+          <ul class="tags" aria-label="Topics">
+            <li class="tag">Gender</li>
+            <li class="tag">RCT</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       TEACHING AND OUTREACH
+       ====================================================================== -->
+  <section class="section wrap" id="teaching" aria-labelledby="teaching-title">
+    <div class="section-inner">
+      <h2 class="section-title" id="teaching-title">Teaching and outreach</h2>
+
+      <!-- EDIT HERE: teaching and outreach entries -->
+      <ul class="entries">
+        <li class="entry">
+          <p class="entry-date">2026</p>
+          <div class="entry-body">
+            <h3 class="entry-title">A Backbencher’s Guide to Econometrics</h3>
+            <p>A plain-language introductory econometrics booklet, printed on a not-for-profit basis and used by over 100 students and 20 university teachers in Bangladesh.</p>
+          </div>
+        </li>
+
+        <li class="entry">
+          <p class="entry-date">In progress</p>
+          <div class="entry-body">
+            <h3 class="entry-title">Bangla translation of <i>Good Economics for Hard Times</i></h3>
+            <p class="entry-meta">By Abhijit V. Banerjee and Esther Duflo</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       WRITING
+       ====================================================================== -->
+  <section class="section wrap" id="writing" aria-labelledby="writing-title">
+    <div class="section-inner">
+      <h2 class="section-title" id="writing-title">Writing</h2>
+
+      <div>
+        <!-- EDIT HERE: writing summary -->
+        <p class="writing-intro">I wrote over a hundred research-driven features for <i>The Business Standard</i> (2024–2026).</p>
+
+        <!-- EDIT HERE: selected pieces.
+             CHECK TITLE marks a headline guessed from the URL: compare it with the
+             published headline and fix the wording. -->
+        <ul class="writing-list">
+          <!-- Confirmed against the published headline -->
+          <li><a href="https://www.tbsnews.net/features/panorama/phd-landscape-bangladesh-reality-check-1090906" target="_blank" rel="noopener">The PhD landscape in Bangladesh: A reality check</a></li>
+          <!-- CHECK TITLE: guessed from the URL -->
+          <li><a href="https://www.tbsnews.net/features/panorama/how-crypto-thrives-bangladeshs-legal-grey-zone-1137576" target="_blank" rel="noopener">How crypto thrives in Bangladesh’s legal grey zone</a></li>
+          <!-- CHECK TITLE: guessed from the URL -->
+          <li><a href="https://www.tbsnews.net/features/panorama/what-about-our-own-adolescents-1124121" target="_blank" rel="noopener">What about our own adolescents?</a></li>
+          <!-- CHECK TITLE: guessed from the URL -->
+          <li><a href="https://www.tbsnews.net/features/panorama/online-moral-police-forces-cracking-down-interfaith-relationships-1056001" target="_blank" rel="noopener">Online moral police forces cracking down on interfaith relationships</a></li>
+          <!-- CHECK TITLE: guessed from the URL -->
+          <li><a href="https://www.tbsnews.net/features/panorama/dhakas-buried-past-archaeological-excavation-unveils-new-history-988176" target="_blank" rel="noopener">Dhaka’s buried past: Archaeological excavation unveils new history</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       EDUCATION
+       ====================================================================== -->
+  <section class="section wrap" id="education" aria-labelledby="education-title">
+    <div class="section-inner">
+      <h2 class="section-title" id="education-title">Education</h2>
+
+      <!-- EDIT HERE: degrees -->
+      <ul class="edu">
+        <li class="entry">
+          <p class="entry-date">2025–present</p>
+          <p>MS in Mathematics, <span class="edu-place">Ahsanullah University of Science and Technology</span></p>
+        </li>
+        <li class="entry">
+          <p class="entry-date">2024</p>
+          <p>BSc in Economics, <span class="edu-place">Jahangirnagar University</span></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<!-- ========================================================================
+     FOOTER
+     ======================================================================== -->
+<footer class="site-footer wrap">
+  <!-- Small trend-line divider: filled in by the script (see TREND_SETTINGS.divider) -->
+  <svg class="trend trend--divider" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"></svg>
+
+  <!-- EDIT HERE: contact links -->
+  <ul class="footer-links">
+    <li><a href="mailto:hossain.imran@bracu.ac.bd">hossain.imran@bracu.ac.bd</a></li>
+    <li><a href="mailto:imranh.econ@gmail.com">imranh.econ@gmail.com</a></li>
+    <li><a href="https://www.linkedin.com/in/imranh47/" target="_blank" rel="noopener">LinkedIn</a></li>
+    <li><a href="https://github.com/ImranH47" target="_blank" rel="noopener">GitHub</a></li>
+    <li><a href="https://x.com/ImranH_47/" target="_blank" rel="noopener">X</a></li>
+  </ul>
+  <!-- EDIT HERE: update date -->
+  <p class="footer-note">Last updated October 2026</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ========================================================================
+     EDIT HERE: trend-line settings
+     The lines are a seeded random walk: the same seed always draws the same
+     lines, so the picture never changes between visits. Try other seeds
+     until you like the shape.
+     ======================================================================== */
+  const TREND_SETTINGS = {
+    hero: {
+      seed: 72,              // EDIT HERE: any whole number
+      lines: 4,              // EDIT HERE: number of lines
+      points: 34,            // steps in each walk (more = more jagged)
+      drift: 0.22,           // average upward step (0 = no overall trend)
+      volatility: 1,         // size of the random steps
+      strongLine: 0,         // which line is stronger and ends in a dot
+      opacity: 0.22,         // faint lines
+      strongOpacity: 0.6,    // the stronger line
+      width: 1,              // px
+      strongWidth: 1.5,      // px
+      dotSize: 6,            // px, diameter of the end dot
+      dotOpacity: 0.9,
+      drawDuration: 2000     // ms, left-to-right draw that starts after the bars finish
+    },
+    divider: {
+      seed: 7,               // EDIT HERE
+      lines: 3,              // EDIT HERE
+      points: 90,
+      drift: 0.04,
+      volatility: 1,
+      strongLine: 0,
+      opacity: 0.3,
+      strongOpacity: 0.65,
+      width: 1,
+      strongWidth: 1.25,
+      dotSize: 5,
+      dotOpacity: 0.9
+    }
+  };
+
+  const root = document.documentElement;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+
+  /* ---------- Seeded random numbers (mulberry32) ------------------------ */
+  function seededRandom(seed) {
+    let a = seed >>> 0;
+    return function () {
+      a = (a + 0x6D2B79F5) >>> 0;
+      let t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  /* ---------- Build the random walks ------------------------------------ */
+  function makeWalks(cfg) {
+    const rand = seededRandom(cfg.seed);
+    const noise = () => (rand() + rand() + rand() - 1.5) * 2;   // roughly normal, sd ≈ 1
+    const walks = [];
+
+    for (let i = 0; i < cfg.lines; i++) {
+      const strong = i === cfg.strongLine;
+      const start = strong ? 0 : rand() * 0.35;          // share of the width where it begins
+      const end = strong ? 1 : 0.7 + rand() * 0.3;       // and where it ends
+      const drift = cfg.drift * (strong ? 1.25 : 0.4 + rand() * 0.9);
+      const steps = Math.max(2, Math.round(cfg.points * (end - start)));
+
+      let value = (rand() - 0.5) * cfg.points * cfg.volatility * 0.5;
+      const values = [value];
+      for (let k = 0; k < steps; k++) {
+        value += drift + noise() * cfg.volatility;
+        values.push(value);
+      }
+      walks.push({ start, end, values, strong });
+    }
+    return walks;
+  }
+
+  /* ---------- Draw them into an <svg> ----------------------------------- */
+  function drawTrend(svg, cfg) {
+    if (!svg) return;
+    const box = svg.viewBox.baseVal;
+    const W = box.width;
+    const H = box.height;
+    const padY = H * 0.08;
+    const usableW = W * 0.985;            // leaves room for the end dot
+    const walks = makeWalks(cfg);
+
+    // One shared vertical scale, so the lines keep their relative levels
+    let min = Infinity;
+    let max = -Infinity;
+    walks.forEach(w => w.values.forEach(v => {
+      if (v < min) min = v;
+      if (v > max) max = v;
+    }));
+    const span = (max - min) || 1;
+    const toY = v => H - padY - ((v - min) / span) * (H - 2 * padY);
+
+    const frag = document.createDocumentFragment();
+    walks.forEach(w => {
+      const x0 = w.start * usableW;
+      const x1 = w.end * usableW;
+      const n = w.values.length - 1;
+      let d = '';
+      let lastX = 0;
+      let lastY = 0;
+      w.values.forEach((v, k) => {
+        lastX = x0 + (x1 - x0) * (k / n);
+        lastY = toY(v);
+        d += (k ? 'L' : 'M') + lastX.toFixed(1) + ' ' + lastY.toFixed(1);
+      });
+
+      const path = document.createElementNS(SVG_NS, 'path');
+      path.setAttribute('d', d);
+      path.style.opacity = w.strong ? cfg.strongOpacity : cfg.opacity;
+      path.style.strokeWidth = (w.strong ? cfg.strongWidth : cfg.width) + 'px';
+      frag.appendChild(path);
+
+      if (w.strong) {
+        // A zero-length segment with a round cap draws a perfect circle,
+        // even though the SVG itself is stretched to fit its box.
+        const dot = document.createElementNS(SVG_NS, 'path');
+        dot.setAttribute('d', 'M' + lastX.toFixed(1) + ' ' + lastY.toFixed(1) + 'h0.01');
+        dot.style.opacity = cfg.dotOpacity;
+        dot.style.strokeWidth = cfg.dotSize + 'px';
+        frag.appendChild(dot);
+      }
+    });
+
+    svg.replaceChildren(frag);
+  }
+
+  /* ---------- Hero lines: draw once, after the bars have grown ---------- */
+  const heroSvg = document.querySelector('.trend--hero');
+  drawTrend(heroSvg, TREND_SETTINGS.hero);
+
+  if (heroSvg && !reduceMotion && typeof heroSvg.animate === 'function') {
+    const hidden = 'inset(-12px 100% -12px -12px)';
+    const shown = 'inset(-12px -12px -12px -12px)';
+    heroSvg.style.clipPath = hidden;
+
+    let started = false;
+    const startDrawing = () => {
+      if (started) return;
+      started = true;
+      const anim = heroSvg.animate(
+        [{ clipPath: hidden }, { clipPath: shown }],
+        { duration: TREND_SETTINGS.hero.drawDuration, easing: 'cubic-bezier(0.33, 0, 0.2, 1)', fill: 'forwards' }
+      );
+      anim.onfinish = () => {
+        heroSvg.style.clipPath = 'none';
+        anim.cancel();
+      };
+    };
+
+    // Start as soon as every bar has finished its growth animation
+    const bars = document.querySelectorAll('.bar');
+    let finished = 0;
+    bars.forEach(bar => bar.addEventListener('animationend', () => {
+      finished += 1;
+      if (finished === bars.length) startDrawing();
+    }, { once: true }));
+    setTimeout(startDrawing, 1600);   // safety net if the bar events are missed
+  }
+
+  /* ---------- Footer divider: static ------------------------------------ */
+  drawTrend(document.querySelector('.trend--divider'), TREND_SETTINGS.divider);
+
+  /* ---------- Theme toggle ---------------------------------------------- */
+  const THEME_KEY = 'theme';
+  const toggle = document.querySelector('.theme-toggle');
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+  function syncThemeUI() {
+    const dark = root.getAttribute('data-theme') === 'dark';
+    toggle.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    if (themeMeta) {
+      themeMeta.setAttribute('content', getComputedStyle(root).getPropertyValue('--bg').trim());
+    }
+  }
+
+  toggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+    syncThemeUI();
+  });
+
+  // Follow system changes until the visitor has made their own choice
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+  const onSystemChange = e => {
+    let saved = null;
+    try { saved = localStorage.getItem(THEME_KEY); } catch (err) {}
+    if (saved) return;
+    root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+    syncThemeUI();
+  };
+  if (systemDark.addEventListener) systemDark.addEventListener('change', onSystemChange);
+
+  syncThemeUI();
+
+  /* ---------- Mobile menu ----------------------------------------------- */
+  const header = document.querySelector('.site-header');
+  const menuBtn = document.querySelector('.menu-btn');
+  const menuText = menuBtn.querySelector('.menu-btn-text');
+  const navLinks = document.getElementById('nav-links');
+
+  function setMenu(open) {
+    header.classList.toggle('is-open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menuText.textContent = open ? 'Close' : 'Menu';
+  }
+
+  menuBtn.addEventListener('click', () => setMenu(!header.classList.contains('is-open')));
+  navLinks.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && header.classList.contains('is-open')) {
+      setMenu(false);
+      menuBtn.focus();
+    }
+  });
+  document.addEventListener('click', e => {
+    if (header.classList.contains('is-open') && !header.contains(e.target)) setMenu(false);
+  });
+  const wide = window.matchMedia('(min-width: 52rem)');
+  if (wide.addEventListener) wide.addEventListener('change', e => { if (e.matches) setMenu(false); });
+
+  /* ---------- Tell screen-reader users which links open a new tab ------- */
+  document.querySelectorAll('a[target="_blank"]').forEach(a => {
+    const note = document.createElement('span');
+    note.className = 'visually-hidden';
+    note.textContent = ' (opens in a new tab)';
+    a.appendChild(note);
+  });
+})();
+</script>
+</body>
+</html>
