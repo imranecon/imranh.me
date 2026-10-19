@@ -3,8 +3,7 @@ import { getPortfolioData } from "@/lib/portfolioData";
 import { PortfolioProvider } from "@/context/PortfolioContext";
 import { DashboardClient } from "@/components/dashboard/DashboardClient";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const instant = false;
 
 export const metadata: Metadata = {
   title: "Dashboard | Imran Hossain Portfolio",

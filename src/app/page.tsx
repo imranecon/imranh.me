@@ -9,8 +9,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { getPortfolioData } from "@/lib/portfolioData";
 import { PortfolioProvider } from "@/context/PortfolioContext";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const instant = false;
 
 export default async function Home() {
   const portfolioData = await getPortfolioData();
