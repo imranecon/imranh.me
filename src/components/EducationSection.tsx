@@ -9,7 +9,7 @@ export function EducationSection() {
   const sectionRef = React.useRef<HTMLElement>(null);
   const { opacity: headingOpacity, scale: headingScale, dotScale, dotOpacity } = useSectionHeaderSync(sectionRef, { isFirst: true });
   const { data } = usePortfolio();
-  const education = data.education;
+  const education = data.education || [];
 
   return (
     <section ref={sectionRef} id="education" className="border-b border-border py-6 sm:py-9 md:py-18">
@@ -39,7 +39,7 @@ export function EducationSection() {
             <ul className="divide-y divide-border/60">
               {education.map((item, idx) => (
                 <motion.li
-                  key={item.id || item.degree}
+                  key={item.id || `${item.degree}-${idx}`}
                   initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}

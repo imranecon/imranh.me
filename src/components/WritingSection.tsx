@@ -10,7 +10,9 @@ export function WritingSection() {
   const sectionRef = React.useRef<HTMLElement>(null);
   const { opacity: headingOpacity, scale: headingScale, dotScale, dotOpacity } = useSectionHeaderSync(sectionRef, { isLast: true });
   const { data } = usePortfolio();
-  const { intro, articles } = data.writing;
+  const writing = data.writing || { intro: "", articles: [] };
+  const intro = writing.intro || "";
+  const articles = Array.isArray(writing.articles) ? writing.articles : [];
 
   return (
     <section ref={sectionRef} id="writing" className="border-b border-border py-6 sm:py-9 md:py-18">
@@ -37,22 +39,24 @@ export function WritingSection() {
 
           {/* Articles List */}
           <div className="md:col-span-8">
-            <motion.div 
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="font-sans text-base sm:text-lg text-foreground/80 mb-4 sm:mb-6 md:mb-8 leading-relaxed space-y-3"
-            >
-              {intro.split(/\n\s*\n/).map((para, pIdx) => (
-                <p key={pIdx} className="whitespace-pre-line">{para.trim()}</p>
-              ))}
-            </motion.div>
+            {intro && (
+              <motion.div 
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="font-sans text-base sm:text-lg text-foreground/80 mb-4 sm:mb-6 md:mb-8 leading-relaxed space-y-3"
+              >
+                {intro.split(/\n\s*\n/).map((para, pIdx) => (
+                  <p key={pIdx} className="whitespace-pre-line">{para.trim()}</p>
+                ))}
+              </motion.div>
+            )}
 
             <ul className="divide-y divide-border/60 border-t border-b border-border/60">
               {articles.map((item, idx) => (
                 <motion.li
-                  key={item.title}
+                  key={item.id || `${item.title}-${idx}`}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}

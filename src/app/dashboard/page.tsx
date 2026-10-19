@@ -1,8 +1,10 @@
 import { Metadata } from "next";
-import portfolioData from "@/data/portfolio.json";
+import { getPortfolioData } from "@/lib/portfolioData";
 import { PortfolioProvider } from "@/context/PortfolioContext";
 import { DashboardClient } from "@/components/dashboard/DashboardClient";
-import { PortfolioData } from "@/types/portfolio";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Dashboard | Imran Hossain Portfolio",
@@ -10,9 +12,11 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const portfolioData = await getPortfolioData();
+
   return (
-    <PortfolioProvider initialData={portfolioData as PortfolioData}>
+    <PortfolioProvider initialData={portfolioData}>
       <DashboardClient />
     </PortfolioProvider>
   );

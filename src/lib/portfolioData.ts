@@ -25,8 +25,24 @@ export async function getPortfolioData(): Promise<PortfolioData> {
           return {
             ...defaultPortfolioData,
             ...parsed,
-            hero: { ...defaultPortfolioData.hero, ...(parsed.hero || {}) },
-            writing: { ...defaultPortfolioData.writing, ...(parsed.writing || {}) },
+            hero: {
+              ...defaultPortfolioData.hero,
+              ...(parsed.hero || {}),
+              socialLinks: {
+                ...defaultPortfolioData.hero.socialLinks,
+                ...(parsed.hero?.socialLinks || {}),
+              },
+            },
+            education: Array.isArray(parsed.education) ? parsed.education : defaultPortfolioData.education,
+            research: Array.isArray(parsed.research) ? parsed.research : defaultPortfolioData.research,
+            policy: Array.isArray(parsed.policy) ? parsed.policy : defaultPortfolioData.policy,
+            teaching: Array.isArray(parsed.teaching) ? parsed.teaching : defaultPortfolioData.teaching,
+            writing: {
+              intro: parsed.writing?.intro ?? defaultPortfolioData.writing.intro,
+              articles: Array.isArray(parsed.writing?.articles)
+                ? parsed.writing.articles
+                : defaultPortfolioData.writing.articles,
+            },
           };
         }
       }
@@ -42,8 +58,24 @@ export async function getPortfolioData(): Promise<PortfolioData> {
     return {
       ...defaultPortfolioData,
       ...parsed,
-      hero: { ...defaultPortfolioData.hero, ...(parsed.hero || {}) },
-      writing: { ...defaultPortfolioData.writing, ...(parsed.writing || {}) },
+      hero: {
+        ...defaultPortfolioData.hero,
+        ...(parsed.hero || {}),
+        socialLinks: {
+          ...defaultPortfolioData.hero.socialLinks,
+          ...(parsed.hero?.socialLinks || {}),
+        },
+      },
+      education: Array.isArray(parsed.education) ? parsed.education : defaultPortfolioData.education,
+      research: Array.isArray(parsed.research) ? parsed.research : defaultPortfolioData.research,
+      policy: Array.isArray(parsed.policy) ? parsed.policy : defaultPortfolioData.policy,
+      teaching: Array.isArray(parsed.teaching) ? parsed.teaching : defaultPortfolioData.teaching,
+      writing: {
+        intro: parsed.writing?.intro ?? defaultPortfolioData.writing.intro,
+        articles: Array.isArray(parsed.writing?.articles)
+          ? parsed.writing.articles
+          : defaultPortfolioData.writing.articles,
+      },
     };
   } catch (err) {
     console.warn("Could not read portfolio.json, using default data.", err);

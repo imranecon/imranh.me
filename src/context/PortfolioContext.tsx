@@ -27,27 +27,65 @@ export function PortfolioProvider({
   const [isLoading, setIsLoading] = React.useState(!initialData);
   const [lastSaved, setLastSaved] = React.useState<Date | null>(null);
 
-  // Sync with API on mount if not provided with initialData
+  // Always fetch latest data from API on mount to ensure fresh state
   React.useEffect(() => {
-    if (!initialData) {
-      let active = true;
-      fetch("/api/portfolio")
-        .then((res) => res.json())
-        .then((fetchedData) => {
-          if (active && fetchedData && !fetchedData.error) {
-            setData(fetchedData);
-          }
-        })
-        .catch((err) => console.error("Failed to fetch portfolio data:", err))
-        .finally(() => {
-          if (active) setIsLoading(false);
-        });
+    let active = true;
+    fetch("/api/portfolio")
+      .then((res) => res.json())
+      .then((fetchedData) => {
+        if (active && fetchedData && !fetchedData.error) {
+          setData(fetchedData);
+        }
+      })
+      .catch((err) => console.error("Failed to fetch portfolio data:", err))
+      .finally(() => {
+        if (active) setIsLoading(false);
+      });
 
-      return () => {
-        active = false;
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Listen for updates from other tabs or windows
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    let channel: BroadcastChannel | null = null;
+    try {
+      channel = new BroadcastChannel("portfolio_updates");
+      channel.onmessage = (event) => {
+        if (event.data?.type === "PORTFOLIO_UPDATED" && event.data?.data) {
+          setData(event.data.data);
+          setLastSaved(new Date());
+        }
       };
+    } catch {
+      // BroadcastChannel not supported in some older environments
     }
-  }, [initialData]);
+
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === "portfolio_last_updated" && e.newValue) {
+        try {
+          const freshData = JSON.parse(e.newValue);
+          setData(freshData);
+          setLastSaved(new Date());
+        } catch {
+          fetch("/api/portfolio")
+            .then((r) => r.json())
+            .then((d) => {
+              if (d && !d.error) setData(d);
+            });
+        }
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+    return () => {
+      if (channel) channel.close();
+      window.removeEventListener("storage", handleStorage);
+    };
+  }, []);
 
   const updateData = async (newData: PortfolioData): Promise<boolean> => {
     setIsSaving(true);
@@ -65,6 +103,19 @@ export function PortfolioProvider({
       const result = await res.json();
       if (result.success) {
         setLastSaved(new Date());
+        // Broadcast to other open tabs / windows
+        try {
+          const channel = new BroadcastChannel("portfolio_updates");
+          channel.postMessage({ type: "PORTFOLIO_UPDATED", data: newData });
+          channel.close();
+        } catch {
+          // Ignore
+        }
+        try {
+          localStorage.setItem("portfolio_last_updated", JSON.stringify(newData));
+        } catch {
+          // Ignore
+        }
         return true;
       }
       return false;
@@ -89,6 +140,14 @@ export function PortfolioProvider({
       if (result.success && result.data) {
         setData(result.data);
         setLastSaved(new Date());
+        try {
+          const channel = new BroadcastChannel("portfolio_updates");
+          channel.postMessage({ type: "PORTFOLIO_UPDATED", data: result.data });
+          channel.close();
+        } catch {}
+        try {
+          localStorage.setItem("portfolio_last_updated", JSON.stringify(result.data));
+        } catch {}
         return true;
       }
       return false;

@@ -9,7 +9,7 @@ export function PolicySection() {
   const sectionRef = React.useRef<HTMLElement>(null);
   const { opacity: headingOpacity, scale: headingScale, dotScale, dotOpacity } = useSectionHeaderSync(sectionRef);
   const { data } = usePortfolio();
-  const policyWorks = data.policy;
+  const policyWorks = data.policy || [];
 
   return (
     <section ref={sectionRef} id="research-experience" className="border-b border-border py-6 sm:py-9 md:py-18 relative">
@@ -39,7 +39,7 @@ export function PolicySection() {
           <div className="md:col-span-8 space-y-6 sm:space-y-8 md:space-y-10">
             {policyWorks.map((work, idx) => (
               <motion.article
-                key={work.id || work.title}
+                key={work.id || `${work.title}-${idx}`}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -51,16 +51,16 @@ export function PolicySection() {
                 </h3>
 
                 <div className="font-sans text-sm sm:text-base text-foreground/80 leading-relaxed max-w-2xl space-y-2 mb-3.5">
-                  {work.description.split(/\n\s*\n/).map((para, pIdx) => (
+                  {(work.description || "").split(/\n\s*\n/).map((para, pIdx) => (
                     <p key={pIdx} className="whitespace-pre-line">{para.trim()}</p>
                   ))}
                 </div>
 
-                {work.tags && work.tags.length > 0 && (
+                {Array.isArray(work.tags) && work.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-0.5">
-                    {work.tags.map((tag) => (
+                    {work.tags.map((tag, tIdx) => (
                       <span
-                        key={tag}
+                        key={`${tag}-${tIdx}`}
                         className="font-mono text-[10px] text-muted-foreground bg-muted/70 px-2.5 py-0.5 rounded-full border border-border/70"
                       >
                         {tag}

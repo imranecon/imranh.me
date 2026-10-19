@@ -12,7 +12,7 @@ export function ResearchSection() {
   const sectionRef = React.useRef<HTMLElement>(null);
   const { opacity: headingOpacity, scale: headingScale, dotScale, dotOpacity } = useSectionHeaderSync(sectionRef);
   const { data } = usePortfolio();
-  const papers: ResearchItem[] = data.research;
+  const papers: ResearchItem[] = data.research || [];
 
   // BY DEFAULT ALL ACCORDIONS ARE CLOSED
   const [openId, setOpenId] = React.useState<string | null>(null);
@@ -51,7 +51,7 @@ export function ResearchSection() {
               const isOpen = openId === paper.id;
               return (
                 <motion.article
-                  key={paper.id}
+                  key={paper.id || `${paper.title}-${idx}`}
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}

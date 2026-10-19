@@ -9,7 +9,7 @@ export function TeachingSection() {
   const sectionRef = React.useRef<HTMLElement>(null);
   const { opacity: headingOpacity, scale: headingScale, dotScale, dotOpacity } = useSectionHeaderSync(sectionRef);
   const { data } = usePortfolio();
-  const teachingItems = data.teaching;
+  const teachingItems = data.teaching || [];
 
   return (
     <section ref={sectionRef} id="outreach" className="border-b border-border py-6 sm:py-9 md:py-18 relative">
@@ -39,7 +39,7 @@ export function TeachingSection() {
           <div className="md:col-span-8 space-y-6 sm:space-y-8 md:space-y-10">
             {teachingItems.map((item, idx) => (
               <motion.article 
-                key={item.id || item.title}
+                key={item.id || `${item.title}-${idx}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
@@ -57,7 +57,7 @@ export function TeachingSection() {
                   {item.title}
                 </h3>
                 <div className="font-sans text-sm sm:text-base text-foreground/80 leading-relaxed max-w-2xl space-y-2.5">
-                  {item.description.split(/\n\s*\n/).map((para, pIdx) => (
+                  {(item.description || "").split(/\n\s*\n/).map((para, pIdx) => (
                     <p key={pIdx} className="whitespace-pre-line">{para.trim()}</p>
                   ))}
                 </div>

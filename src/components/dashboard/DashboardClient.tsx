@@ -249,6 +249,36 @@ export function DashboardClient() {
     if (ok) showToast("Order updated");
   };
 
+  // Explicit Section Save Handler
+  const handleSaveSection = async (section: TabKey) => {
+    const sectionLabels: Record<TabKey, string> = {
+      hero: "Profile & Bio",
+      education: "Education",
+      research: "Academic Papers",
+      policy: "Research Experience",
+      teaching: "Outreach",
+      writing: "Writing",
+    };
+
+    let updatedData = { ...data };
+    if (section === "writing") {
+      updatedData = {
+        ...updatedData,
+        writing: {
+          ...updatedData.writing,
+          intro: writingIntro,
+        },
+      };
+    }
+
+    const ok = await updateData(updatedData);
+    if (ok) {
+      showToast(`${sectionLabels[section]} changes saved successfully!`, "success");
+    } else {
+      showToast(`Failed to save ${sectionLabels[section]} changes`, "error");
+    }
+  };
+
   // Save Add or Edit modal
   const handleSaveModalItem = async (formData: Record<string, unknown>) => {
     const section = editingItem ? editingItem.section : activeTab;
@@ -268,6 +298,7 @@ export function DashboardClient() {
       } else if (section === "writing") {
         updated.writing = {
           ...data.writing,
+          intro: writingIntro,
           articles: data.writing.articles.map((i) => (i.id === id ? ({ ...i, ...formData, id } as WritingItem) : i)),
         };
       }
@@ -288,6 +319,7 @@ export function DashboardClient() {
       } else if (section === "writing") {
         updated.writing = {
           ...data.writing,
+          intro: writingIntro,
           articles: [newItem as unknown as WritingItem, ...data.writing.articles],
         };
       }
@@ -695,6 +727,8 @@ export function DashboardClient() {
             onEdit={(item) => setEditingItem({ section: "education", item })}
             onDelete={(item) => setDeleteConfirm({ section: "education", id: item.id, title: item.degree })}
             onMove={(idx, dir) => handleMove("education", idx, dir)}
+            onSave={() => handleSaveSection("education")}
+            isSaving={isSaving}
             renderItemContent={(item: EducationItem) => (
               <div className="flex-1 pr-4">
                 <div className="flex items-baseline gap-2 mb-1">
@@ -721,6 +755,8 @@ export function DashboardClient() {
             onEdit={(item) => setEditingItem({ section: "research", item })}
             onDelete={(item) => setDeleteConfirm({ section: "research", id: item.id, title: item.title })}
             onMove={(idx, dir) => handleMove("research", idx, dir)}
+            onSave={() => handleSaveSection("research")}
+            isSaving={isSaving}
             renderItemContent={(item: ResearchItem) => (
               <div className="flex-1 pr-4">
                 <div className="flex items-center gap-2 mb-1.5">
@@ -764,6 +800,8 @@ export function DashboardClient() {
             onEdit={(item) => setEditingItem({ section: "policy", item })}
             onDelete={(item) => setDeleteConfirm({ section: "policy", id: item.id, title: item.title })}
             onMove={(idx, dir) => handleMove("policy", idx, dir)}
+            onSave={() => handleSaveSection("policy")}
+            isSaving={isSaving}
             renderItemContent={(item: PolicyItem) => (
               <div className="flex-1 pr-4">
                 <h3 className="font-serif text-base sm:text-lg font-medium text-foreground mb-1 leading-snug">
@@ -773,14 +811,15 @@ export function DashboardClient() {
                   {item.description}
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {item.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="font-mono text-[10px] text-muted-foreground bg-muted px-2 py-0.5 rounded-full border border-border"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                  {Array.isArray(item.tags) &&
+                    item.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="font-mono text-[10px] text-muted-foreground bg-muted px-2 py-0.5 rounded-full border border-border"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                 </div>
               </div>
             )}
@@ -799,6 +838,8 @@ export function DashboardClient() {
             onEdit={(item) => setEditingItem({ section: "teaching", item })}
             onDelete={(item) => setDeleteConfirm({ section: "teaching", id: item.id, title: item.title })}
             onMove={(idx, dir) => handleMove("teaching", idx, dir)}
+            onSave={() => handleSaveSection("teaching")}
+            isSaving={isSaving}
             renderItemContent={(item: TeachingItem) => (
               <div className="flex-1 pr-4">
                 {item.badge && (
@@ -822,9 +863,20 @@ export function DashboardClient() {
           <div className="space-y-6">
             {/* Intro statement editor */}
             <div className="rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-xs">
-              <h3 className="font-serif text-lg font-medium text-foreground mb-1">
-                Writing Section Introduction Note
-              </h3>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-1">
+                <h3 className="font-serif text-lg font-medium text-foreground">
+                  Writing Section Introduction Note
+                </h3>
+                <button
+                  type="button"
+                  onClick={handleSaveWritingIntro}
+                  disabled={isSaving}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 text-xs font-sans font-medium transition-all cursor-pointer disabled:opacity-50"
+                >
+                  <Save className="h-3.5 w-3.5" />
+                  <span>{isSaving ? "Saving..." : "Save Note Only"}</span>
+                </button>
+              </div>
               <p className="text-xs text-muted-foreground mb-3">
                 This introductory sentence appears at the top of the Writing section.
               </p>
@@ -836,13 +888,6 @@ export function DashboardClient() {
                   className="flex-1 px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:border-primary"
                   placeholder="Between 2024 and 2026, I wrote over a hundred research-driven features..."
                 />
-                <button
-                  type="button"
-                  onClick={handleSaveWritingIntro}
-                  className="px-4 py-2.5 rounded-xl bg-primary text-white text-xs font-medium hover:bg-[#E04500] transition-all cursor-pointer shrink-0"
-                >
-                  Save Note
-                </button>
               </div>
             </div>
 
@@ -857,6 +902,8 @@ export function DashboardClient() {
               onEdit={(item) => setEditingItem({ section: "writing", item })}
               onDelete={(item) => setDeleteConfirm({ section: "writing", id: item.id, title: item.title })}
               onMove={(idx, dir) => handleMove("writing", idx, dir)}
+              onSave={() => handleSaveSection("writing")}
+              isSaving={isSaving}
               renderItemContent={(item: WritingItem) => (
                 <div className="flex-1 pr-4">
                   <h3 className="font-serif text-base sm:text-lg font-medium text-foreground mb-1 leading-snug">
@@ -883,6 +930,7 @@ export function DashboardClient() {
       <AnimatePresence>
         {(isAddModalOpen || editingItem) && (
           <ItemModal
+            key={editingItem ? `${editingItem.section}-${editingItem.item.id}` : `add-${activeTab}`}
             section={editingItem ? editingItem.section : activeTab}
             initialData={editingItem ? editingItem.item : null}
             onClose={() => {
@@ -996,7 +1044,7 @@ export function DashboardClient() {
   );
 }
 
-// Section Manager Component with Search, Add, List, Move, Edit, Delete
+// Section Manager Component with Search, Add, List, Move, Edit, Delete, and Save
 function SectionManager<T extends { id: string }>({
   title,
   description,
@@ -1007,6 +1055,8 @@ function SectionManager<T extends { id: string }>({
   onEdit,
   onDelete,
   onMove,
+  onSave,
+  isSaving,
   renderItemContent,
 }: {
   title: string;
@@ -1018,6 +1068,8 @@ function SectionManager<T extends { id: string }>({
   onEdit: (item: T) => void;
   onDelete: (item: T) => void;
   onMove: (index: number, dir: "up" | "down") => void;
+  onSave?: () => void;
+  isSaving?: boolean;
   renderItemContent: (item: T) => React.ReactNode;
 }) {
   const filteredItems = items.filter((item) => {
@@ -1037,14 +1089,29 @@ function SectionManager<T extends { id: string }>({
           <p className="text-xs sm:text-sm text-muted-foreground">{description}</p>
         </div>
 
-        <button
-          type="button"
-          onClick={onAddNew}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary hover:bg-[#E04500] text-white text-xs sm:text-sm font-medium transition-all shadow-sm cursor-pointer shrink-0 self-stretch sm:self-auto justify-center"
-        >
-          <Plus className="h-4 w-4" />
-          <span>Add New</span>
-        </button>
+        <div className="flex items-center gap-2.5 self-stretch sm:self-auto shrink-0 flex-wrap sm:flex-nowrap">
+          {onSave && (
+            <button
+              type="button"
+              onClick={onSave}
+              disabled={isSaving}
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4.5 py-2.5 rounded-full bg-primary hover:bg-[#E04500] text-white text-xs sm:text-sm font-medium transition-all shadow-sm cursor-pointer disabled:opacity-50"
+              title={`Save all ${title} changes`}
+            >
+              <Save className="h-4 w-4" />
+              <span>{isSaving ? "Saving..." : `Save ${title}`}</span>
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={onAddNew}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-primary/50 text-primary hover:bg-primary/10 text-xs sm:text-sm font-medium transition-all cursor-pointer"
+          >
+            <Plus className="h-4 w-4" />
+            <span>Add New</span>
+          </button>
+        </div>
       </div>
 
       {/* Filter / Search Bar */}
@@ -1137,6 +1204,27 @@ function SectionManager<T extends { id: string }>({
           })}
         </div>
       )}
+
+      {/* Bottom Save Action Bar */}
+      {onSave && (
+        <div className="mt-6 pt-5 border-t border-border flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-muted/20 -mx-5 -mb-5 sm:-mx-7 sm:-mb-7 p-4 sm:p-5 rounded-b-2xl">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground font-sans">
+            <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+            <span>
+              {items.length} {items.length === 1 ? "entry" : "entries"} in {title}. Click save to confirm any changes or reordering.
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={onSave}
+            disabled={isSaving}
+            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-[#E04500] text-white text-xs sm:text-sm font-medium transition-all shadow-sm cursor-pointer disabled:opacity-50 shrink-0"
+          >
+            <Save className="h-4 w-4" />
+            <span>{isSaving ? "Saving..." : `Save ${title} Changes`}</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -1154,32 +1242,47 @@ function ItemModal({
   onSave: (formData: Record<string, unknown>) => void;
 }) {
   const [formData, setFormData] = React.useState<ModalFormData>(() => {
-    if (initialData) return { ...initialData };
     if (section === "education") {
-      return { degree: "", institution: "", period: "" };
+      const ed = initialData as EducationItem | null;
+      return { degree: ed?.degree || "", institution: ed?.institution || "", period: ed?.period || "" };
     }
     if (section === "research") {
-      return { year: new Date().getFullYear().toString(), title: "", authors: "Imran Hossain", status: "Working paper", url: "", abstract: "" };
+      const res = initialData as ResearchItem | null;
+      return {
+        year: res?.year || new Date().getFullYear().toString(),
+        title: res?.title || "",
+        authors: res?.authors || "Imran Hossain",
+        status: res?.status || "Working paper",
+        url: res?.url || "",
+        abstract: res?.abstract || "",
+      };
     }
     if (section === "policy") {
-      return { title: "", tags: "", description: "" };
+      const pol = initialData as PolicyItem | null;
+      const tagsStr = pol?.tags ? (Array.isArray(pol.tags) ? pol.tags.join(", ") : pol.tags) : "";
+      return { title: pol?.title || "", tags: tagsStr, description: pol?.description || "" };
     }
     if (section === "teaching") {
-      return { badge: new Date().getFullYear().toString(), title: "", description: "" };
+      const tea = initialData as TeachingItem | null;
+      return { badge: tea?.badge || "", title: tea?.title || "", description: tea?.description || "" };
     }
     if (section === "writing") {
-      return { title: "", url: "" };
+      const wri = initialData as WritingItem | null;
+      return { title: wri?.title || "", url: wri?.url || "" };
     }
-    return {};
+    return initialData ? { ...initialData } : {};
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (section === "policy" && typeof formData.tags === "string") {
-      const parsedTags = formData.tags
-        .split(",")
-        .map((t: string) => t.trim())
-        .filter(Boolean);
+    if (section === "policy") {
+      const rawTags = formData.tags;
+      const parsedTags =
+        typeof rawTags === "string"
+          ? rawTags.split(",").map((t) => t.trim()).filter(Boolean)
+          : Array.isArray(rawTags)
+          ? rawTags
+          : [];
       onSave({ ...formData, tags: parsedTags });
     } else {
       onSave(formData);
