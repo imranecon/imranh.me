@@ -4,13 +4,11 @@ import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ChevronDown, ChevronUp } from "lucide-react";
 
-import { useSectionHeaderSync } from "@/lib/useSectionHeaderSync";
 import { usePortfolio } from "@/context/PortfolioContext";
 import { ResearchItem } from "@/types/portfolio";
 
 export function ResearchSection() {
   const sectionRef = React.useRef<HTMLElement>(null);
-  const { opacity: headingOpacity, scale: headingScale, dotScale, dotOpacity } = useSectionHeaderSync(sectionRef);
   const { data } = usePortfolio();
   const papers: ResearchItem[] = data.research || [];
 
@@ -27,18 +25,16 @@ export function ResearchSection() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 md:gap-12">
           
-          {/* Synchronized Scroll-Activated Section Title */}
+          {/* Section Title */}
           <div className="md:col-span-4">
             <div className="md:sticky md:top-24">
               <motion.div
-                style={{ opacity: headingOpacity, scale: headingScale, transformOrigin: "left center" }}
                 className="flex items-center gap-2.5"
               >
                 <motion.span
-                  style={{ scale: dotScale, opacity: dotOpacity }}
                   className="h-2 w-2 rounded-full bg-primary shrink-0 shadow-[0_0_8px_rgba(255,79,0,0.8)]"
                 />
-                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-foreground">
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-primary">
                   Academic Papers
                 </h2>
               </motion.div>

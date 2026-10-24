@@ -34,7 +34,7 @@ export const defaultPortfolioData: PortfolioData = {
       title: "Does Crop Diversification Improve Rural Household Income in Bangladesh?",
       authors: "Imran Hossain",
       status: "Working paper",
-      url: "https://www.academia.edu/165399931/Does_Crop_Diversification_Improve_Rural_Household_Income_in_Bangladesh",
+      url: "/papers/crop-diversification.pdf",
       abstract:
         "This paper examines whether shifting away from mono-cropping toward high-value horticultural and seasonal crop diversification enhances per capita household income and resilience against climatic shocks in rural Bangladesh. Utilizing nationally representative household survey microdata, we employ instrumental variable (IV) and panel fixed-effects estimation to address potential endogeneity in agricultural portfolio selection. The empirical findings suggest significant positive income effects, particularly pronounced among marginal and smallholder farm households facing credit constraints.",
     },
@@ -44,7 +44,7 @@ export const defaultPortfolioData: PortfolioData = {
       title: "Does Institutional Quality Matter for Financial Development? Evidence from Six Asian Emerging Economies",
       authors: "Samia Islam, Mohammad Obaidullah, Imran Hossain, Ann Naser Nabil",
       status: "Presented at the 7th SANEM Annual Economists' Conference",
-      url: "https://www.academia.edu/165400200/Does_Institutional_Quality_Matter_for_Financial_Development_Evidence_from_Six_Asian_Emerging_Economies_",
+      url: "/papers/institutional-quality.pdf",
       abstract:
         "Investigating the empirical relationship between governance quality and financial system deepening across six emerging Asian economies. Using dynamic panel econometrics (System GMM and Pooled Mean Group estimators) over a multi-decade panel, the study demonstrates that rule of law, regulatory quality, and control of corruption exert statistically robust long-run multiplier effects on private sector credit allocation and equity market capitalization.",
     },

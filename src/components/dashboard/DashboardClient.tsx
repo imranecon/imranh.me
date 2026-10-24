@@ -747,7 +747,7 @@ export function DashboardClient() {
         {activeTab === "research" && (
           <SectionManager
             title="Academic Papers"
-            description="Manage working papers, published manuscripts, conferences, abstracts, and academia links."
+            description="Manage working papers, published manuscripts, conferences, abstracts, and paper PDFs."
             items={data.research}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -1090,19 +1090,6 @@ function SectionManager<T extends { id: string }>({
         </div>
 
         <div className="flex items-center gap-2.5 self-stretch sm:self-auto shrink-0 flex-wrap sm:flex-nowrap">
-          {onSave && (
-            <button
-              type="button"
-              onClick={onSave}
-              disabled={isSaving}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4.5 py-2.5 rounded-full bg-primary hover:bg-[#E04500] text-white text-xs sm:text-sm font-medium transition-all shadow-sm cursor-pointer disabled:opacity-50"
-              title={`Save all ${title} changes`}
-            >
-              <Save className="h-4 w-4" />
-              <span>{isSaving ? "Saving..." : `Save ${title}`}</span>
-            </button>
-          )}
-
           <button
             type="button"
             onClick={onAddNew}
@@ -1273,6 +1260,39 @@ function ItemModal({
     return initialData ? { ...initialData } : {};
   });
 
+  // Paper PDF upload (research only)
+  const paperFileRef = React.useRef<HTMLInputElement | null>(null);
+  const [paperUpload, setPaperUpload] = React.useState<{ state: "idle" | "uploading" | "done" | "error"; message?: string }>({ state: "idle" });
+
+  const handlePaperPdfUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.name.toLowerCase().endsWith(".pdf")) {
+      setPaperUpload({ state: "error", message: "Please select a PDF file (.pdf)" });
+      return;
+    }
+    setPaperUpload({ state: "uploading" });
+    try {
+      const body = new FormData();
+      body.append("file", file);
+      body.append("kind", "paper");
+      const existingId = (initialData as ResearchItem | null)?.id;
+      body.append("name", existingId || String(formData.title || "") || file.name.replace(/\.pdf$/i, ""));
+      const res = await fetch("/api/upload", { method: "POST", body });
+      const result = await res.json();
+      if (res.ok && result.success) {
+        setFormData((prev) => ({ ...prev, url: result.url }));
+        setPaperUpload({ state: "done", message: "PDF uploaded. Save the item, then save Academic Papers." });
+      } else {
+        setPaperUpload({ state: "error", message: result.error || "Failed to upload PDF" });
+      }
+    } catch {
+      setPaperUpload({ state: "error", message: "Error uploading PDF file" });
+    } finally {
+      if (paperFileRef.current) paperFileRef.current.value = "";
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (section === "policy") {
@@ -1430,15 +1450,36 @@ function ItemModal({
 
               <div>
                 <label className="block text-xs font-mono uppercase text-muted-foreground mb-1">
-                  Paper / Academia URL
+                  Paper PDF
                 </label>
-                <input
-                  type="url"
-                  value={formData.url}
-                  onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                  placeholder="https://www.academia.edu/..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:border-primary"
-                />
+                <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+                  <input
+                    type="text"
+                    value={formData.url}
+                    onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+                    placeholder="/papers/my-paper.pdf"
+                    className="flex-1 px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm font-mono focus:outline-none focus:border-primary"
+                  />
+                  <input
+                    ref={paperFileRef}
+                    type="file"
+                    accept="application/pdf"
+                    onChange={handlePaperPdfUpload}
+                    className="hidden"
+                  />
+                  <button
+                    type="button"
+                    disabled={paperUpload.state === "uploading"}
+                    onClick={() => paperFileRef.current?.click()}
+                    className="px-4 py-2.5 rounded-xl border border-primary/50 text-primary hover:bg-primary/10 text-xs font-sans font-medium transition-all cursor-pointer flex items-center justify-center gap-1.5 shrink-0 disabled:opacity-50"
+                  >
+                    <Upload className="h-3.5 w-3.5" />
+                    <span>{paperUpload.state === "uploading" ? "Uploading..." : "Upload PDF"}</span>
+                  </button>
+                </div>
+                <p className={`text-[11px] mt-1 ${paperUpload.state === "error" ? "text-destructive" : "text-muted-foreground"}`}>
+                  {paperUpload.message || "Upload the paper\u2019s PDF (saved to /papers/) or paste a link. It opens in a new tab on the site."}
+                </p>
               </div>
 
               <div>

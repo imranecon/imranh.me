@@ -65,6 +65,32 @@ export function SiteHeader() {
   const cvUrl = data.hero.cvUrl || "/imranh_cv.pdf";
   const mounted = useMounted();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const pendingScrollTarget = React.useRef<string | null>(null);
+
+  // Scroll to a section, offsetting for the sticky header
+  const scrollToSection = (hash: string) => {
+    const el = document.getElementById(hash.replace("#", ""));
+    if (!el) return;
+    const headerHeight = document.querySelector("header")?.getBoundingClientRect().height ?? 64;
+    const top = el.getBoundingClientRect().top + window.scrollY - headerHeight;
+    window.scrollTo({ top, behavior: "smooth" });
+    window.history.replaceState(null, "", hash);
+  };
+
+  // Mobile menu link: close the dropdown first, scroll after it has collapsed
+  // (scrolling while the menu collapses shifts the layout and cancels the jump)
+  const handleMobileNavClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
+    e.preventDefault();
+    pendingScrollTarget.current = hash;
+    setMobileMenuOpen(false);
+  };
+
+  const handleMobileMenuExitComplete = () => {
+    if (pendingScrollTarget.current) {
+      scrollToSection(pendingScrollTarget.current);
+      pendingScrollTarget.current = null;
+    }
+  };
   const [cvHovered, setCvHovered] = React.useState(false);
 
   const navLinks = [
@@ -208,7 +234,7 @@ export function SiteHeader() {
       </div>
 
       {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={handleMobileMenuExitComplete}>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -222,7 +248,7 @@ export function SiteHeader() {
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={(e) => handleMobileNavClick(e, item.href)}
                     className="block py-2 text-foreground/90 border-b border-border/50 text-[15px]"
                   >
                     {item.label}
