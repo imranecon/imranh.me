@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { verifyPassword, generateAuthToken, AUTH_COOKIE_NAME } from "@/lib/auth";
+import { verifyPassword, generateAuthToken, isAuthConfigured, AUTH_COOKIE_NAME } from "@/lib/auth";
 
 export async function POST(request: Request) {
   try {
+    if (!isAuthConfigured()) {
+      console.error("Login disabled: ADMIN_PASSWORD and AUTH_SECRET must both be set.");
+      return NextResponse.json(
+        { success: false, error: "Admin login is not configured on this server." },
+        { status: 503 }
+      );
+    }
+
     const body = await request.json();
     const { password } = body;
 
@@ -14,7 +22,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const token = generateAuthToken();
+    const token = generateAuthToken()!;
     const cookieStore = await cookies();
 
     cookieStore.set({
