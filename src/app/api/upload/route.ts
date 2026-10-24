@@ -61,11 +61,11 @@ export async function POST(request: Request) {
         console.error("Supabase storage upload error:", error);
         return NextResponse.json({ error: `Failed to upload PDF: ${error.message}` }, { status: 500 });
       }
-      const { publicUrl } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(objectPath).data;
       return NextResponse.json({
         success: true,
-        // Cache-bust so a replaced file shows up immediately
-        url: `${publicUrl}?v=${Date.now()}`,
+        // Site-relative URL, proxied to storage by the rewrites in next.config.ts.
+        // Cache-bust so a replaced file shows up immediately.
+        url: `${kind === "paper" ? `/papers/${safeName}.pdf` : "/imranh_cv.pdf"}?v=${Date.now()}`,
         message: kind === "paper" ? "Paper PDF uploaded successfully" : "CV uploaded successfully",
       });
     }
