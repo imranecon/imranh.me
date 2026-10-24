@@ -1,10 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextResponse, connection } from "next/server";
 import { getPortfolioData, savePortfolioData } from "@/lib/portfolioData";
 import { defaultPortfolioData } from "@/data/defaultPortfolioData";
 import { PortfolioData } from "@/types/portfolio";
 import { isRequestAuthenticated } from "@/lib/auth";
+import { isSupabaseWriteConfigured } from "@/lib/supabase";
 
 export async function GET() {
+  // Always read at request time so dashboard edits show up without a rebuild
+  await connection();
   try {
     const data = await getPortfolioData();
     return NextResponse.json(data);
@@ -41,7 +44,10 @@ export async function POST(request: Request) {
 
     const success = await savePortfolioData(data);
     if (!success) {
-      return NextResponse.json({ error: "Failed to save data" }, { status: 500 });
+      const hint = isSupabaseWriteConfigured()
+        ? ""
+        : " (database is not configured on this server: set the Supabase environment variables)";
+      return NextResponse.json({ error: `Failed to save data${hint}` }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, data });

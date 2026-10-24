@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { PortfolioData } from "@/types/portfolio";
 import { defaultPortfolioData } from "@/data/defaultPortfolioData";
-import { isSupabaseConfigured, getSupabaseServerClient } from "@/lib/supabase";
+import { isSupabaseConfigured, isSupabaseWriteConfigured, getSupabaseServerClient } from "@/lib/supabase";
 
 const DATA_FILE_PATH = path.join(process.cwd(), "src", "data", "portfolio.json");
 
@@ -95,8 +95,9 @@ export async function savePortfolioData(data: PortfolioData): Promise<boolean> {
     console.error("Failed to write portfolio.json:", err);
   }
 
-  // 2. Save to Supabase if configured
-  if (isSupabaseConfigured()) {
+  // 2. Save to Supabase if configured (on Vercel the file write above always fails,
+  //    so this is the only place changes persist)
+  if (isSupabaseWriteConfigured()) {
     try {
       const supabase = getSupabaseServerClient();
       if (supabase) {

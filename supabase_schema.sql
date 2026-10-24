@@ -25,14 +25,10 @@ CREATE POLICY "Allow public read access"
   TO public
   USING (true);
 
--- 4. Allow insert and update access (authenticated or through API)
+-- 4. No public write policy: the site saves with the service role key, which
+--    bypasses RLS. Drop the old "Allow all access" policy if it exists, since it
+--    let anyone holding the public anon key overwrite the portfolio.
 DROP POLICY IF EXISTS "Allow all access" ON public.portfolio_content;
-CREATE POLICY "Allow all access"
-  ON public.portfolio_content
-  FOR ALL
-  TO public
-  USING (true)
-  WITH CHECK (true);
 
 -- 5. Create an updated_at auto-refresh trigger
 CREATE OR REPLACE FUNCTION public.handle_updated_at()
@@ -48,5 +44,11 @@ CREATE TRIGGER set_updated_at
   BEFORE UPDATE ON public.portfolio_content
   FOR EACH ROW
   EXECUTE FUNCTION public.handle_updated_at();
+
+-- 6. Public storage bucket for uploaded PDFs (CV and papers).
+--    Anyone can download files by URL; only the server (service role key) can upload.
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('portfolio-files', 'portfolio-files', true)
+ON CONFLICT (id) DO UPDATE SET public = true;
 
 -- Done! Your database is now ready to store portfolio content.

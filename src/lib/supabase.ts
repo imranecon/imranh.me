@@ -13,6 +13,14 @@ export function isSupabaseConfigured(): boolean {
   );
 }
 
+// Public bucket that holds uploaded PDFs (CV and papers) in production
+export const STORAGE_BUCKET = "portfolio-files";
+
+// Writes (saves and uploads) need the service role key; the anon key is read-only
+export function isSupabaseWriteConfigured(): boolean {
+  return isSupabaseConfigured() && Boolean(supabaseServiceKey);
+}
+
 // Client for public or browser-side interactions
 let clientInstance: SupabaseClient | null = null;
 
